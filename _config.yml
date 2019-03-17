@@ -9,7 +9,7 @@ baseurl: ""
 description: Shut up and just Try!
 meta_description: 周镇峰;个人博客;学习与创造
 motto: Life is a journey of exploration!
-banner:人生就是一团欲望，欲望不满便痛苦，满足了便无聊。人生就是在痛苦与无聊之间摇摆。
+banner: 人生就是一团欲望,欲望不满便痛苦,满足了便无聊.人生就是在痛苦与无聊之间摇摆.
 
 #permalink: /:categories/:year/:month/:day/:title/
 permalink: /:year/:month/:day/:title/
