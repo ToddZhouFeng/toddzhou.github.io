@@ -23,3 +23,5 @@ github_username: toddzhoufeng
 markdown: kramdown
 
 baidu_analysis: 90a0f4831c8e2164534d62253a53088b
+
+theme: jekyll-theme-minimal
