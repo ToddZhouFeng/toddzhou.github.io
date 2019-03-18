@@ -2,13 +2,9 @@
 layout: post
 title:  树莓派用作HID设备
 date:   2019-03-17 15:33:00 +0800
-<<<<<<< HEAD
-categories: document
+categories: document 
 tag: Raspberry Pi
-=======
-categories: raspberry
-tag: 教程
->>>>>>> parent of d4b5e82... post
+tag: Arduino
 ---
 
 
