@@ -2,8 +2,9 @@
 layout: post
 title:  树莓派用作HID设备
 date:   2019-03-17 15:33:00 +0800
-categories: raspberry
-tag: 教程
+categories: document
+tag: Arduino
+tag: Raspberry Pi
 ---
 
 

@@ -3,7 +3,7 @@ layout: post
 title:  初次尝试用Github搭建博客
 date:   2019-03-17 14:00:00 +0800
 categories: document
-tag: 教程
+tag: Github
 ---
 
 * content
