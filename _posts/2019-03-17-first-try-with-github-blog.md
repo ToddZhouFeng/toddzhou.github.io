@@ -73,7 +73,7 @@ tag: 教程
 我是正文。我是正文。我是正文。我是正文。我是正文。我是正文。
 ```
 
-如果想要在文章里插入图片，可以这样写：
+如果想要在文章里插入图片，可以这样写（路径为github内的路径）：
 
 ```markdown
 ![诫子书]({{ '/styles/images/jiezishu.jpg' | prepend: site.baseurl  }})

@@ -22,7 +22,7 @@ tag: 教程
 
 ​	具体可以去[USB-IF组织](https://www.usb.org/)上查阅[HID Usage Tables 1,12](https://www.usb.org/document-library/hid-usage-tables-112)文档，但USB相关的文档长到够读一个月了，就从网上整理了一些资料。
 
-
+(未完待续)
 
 
 
