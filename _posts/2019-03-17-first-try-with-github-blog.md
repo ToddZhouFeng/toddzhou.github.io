@@ -1,12 +1,8 @@
 ---
 layout: post
-#标题配置
 title:  初次尝试用Github搭建博客
-#时间配置
 date:   2019-03-17 14:00:00 +0800
-#大类配置
 categories: document
-#小类配置
 tag: 教程
 ---
 

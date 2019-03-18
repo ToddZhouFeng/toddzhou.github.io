@@ -1,12 +1,8 @@
 ---
 layout: post
-#标题配置
 title:  树莓派用作HID设备
-#时间配置
 date:   2019-03-17 15:33:00 +0800
-#大类配置
 categories: raspberry
-#小类配置
 tag: 教程
 ---
 
