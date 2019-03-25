@@ -5,7 +5,7 @@ layout: default
   <div class="row">
     <div class="col-md-3">
       <div class="sidebar hidden-print" role="complementary">
-        {% include lefttree.html %} 
+        {% include lefttree.html %}
       </div>
     </div>
     <div class="col-md-9" role="main">
@@ -20,6 +20,10 @@ layout: default
               <br />
             </header>
             <article class="post-content">
+            <!-- 在正文开头添加网易云音乐插件 -->
+              {% if page.music-id %}
+              {% include cloud-music.html %}
+              {% endif %}
               {{ content }}
             </article>
         </div>
