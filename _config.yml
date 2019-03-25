@@ -1,3 +1,4 @@
+encoding: UTF-8
 # Site settings
 name: Todd's Lab
 email: todd310378072@outlook.com
@@ -29,4 +30,3 @@ coderay:
   coderay_bold_every: 10
   coderay_css: style
 baidu_analysis: 90a0f4831c8e2164534d62253a53088b
-encoding: UTF-8
