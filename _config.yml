@@ -21,6 +21,12 @@ github_username: toddzhoufeng
 
 # Build settings
 markdown: kramdown
-
+coderay:
+  coderay_wrap: div
+  coderay_line_numbers: inline
+  coderay_line_numbers_start: 1
+  coderay_tab_width: 4
+  coderay_bold_every: 10
+  coderay_css: style
 baidu_analysis: 90a0f4831c8e2164534d62253a53088b
 encoding: UTF-8
