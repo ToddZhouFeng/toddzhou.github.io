@@ -60,6 +60,8 @@ date:   2016-08-27 01:08:00 +0800
 categories: document
 #小类配置
 tag: 教程
+#网易云音乐，只能播放无版权保护的
+music-id: 465675773
 ---
 
 * content
