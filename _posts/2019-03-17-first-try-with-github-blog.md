@@ -83,3 +83,9 @@ music-id: 465675773
 ![诫子书]({{ '/styles/images/jiezishu.jpg' | prepend: site.baseurl  }} "诫子书")
 
 更多信息需要看[LessOrMore的Github](https://github.com/luoyan35714/LessOrMore.git)。
+
+
+
+顺便说一句，原作者是不支持音乐的。但我可以：
+
+<p>http://yizhibi.6chemical.com/lucyBlog/xianrendege.mp3</p>
