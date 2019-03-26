@@ -86,6 +86,14 @@ music-id: 465675773
 
 
 
-顺便说一句，原作者是不支持音乐的。但我可以：
+顺便说一句，原作者是不支持音乐的。但我可以（下面的是《西安人的歌》）：
 
 <p>http://yizhibi.6chemical.com/lucyBlog/xianrendege.mp3</p>
+
+参考了[一支笔](<https://yizibi.github.io/2018/10/15/jekyll%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E4%B8%AD%E6%B7%BB%E5%8A%A0%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E6%8F%92%E4%BB%B6/>)的博客，只需要在对应位置输入：
+
+~~~html
+<p>音乐外链url</p>
+~~~
+
+缺点是必须是音乐文件（mp3√，其他未知），可能需要云端储存。
