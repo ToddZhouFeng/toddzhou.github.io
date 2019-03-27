@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  [Debian]SCUT树莓派搭建宿舍无线网
+title:  Raspbian版SCUT树莓派搭建宿舍无线网
 date:   2019-03-27 16:26:00 +0800
 categories: document
 tag: Raspberry Pi/Arduino
