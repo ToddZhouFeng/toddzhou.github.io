@@ -28,7 +28,7 @@ music-id: 465675773
 * Ubuntu对树莓派3B+的支持不是很好，官网上提供的系统根本用不了。
 * Ubuntu太过于臃肿，树莓派孱弱的性能不是很够。
 
-&emsp;&emsp;于是我决定找到在Debian系统上开WiFi的方法。显然，我找到了，并且用得很开心。
+&emsp;&emsp;于是我决定找到在Debian系统上开WiFi的方法。显然，我找到了，并且用得很开心。但，这个配置的过程十分漫长......请做好准备。
 
 
 
@@ -43,14 +43,22 @@ music-id: 465675773
 
 # 连接SCUT有线网
 
+&emsp;&emsp;首先安装`cmake`，输入下面命令：
+
+~~~shell
+sudo apt-get install cmake
+~~~
+
+
+
 &emsp;&emsp;按`Ctrl`+`t`打开命令行，**依次**输入以下命令：
 
 ~~~shell
 git clone https://github.com/scutclient/scutclient.git
 cd scutclient
 mkdir build && cd build
-cmake ..
-make
+sudo cmake ..
+sudo make
 ~~~
 
 &emsp;&emsp;然后右键点击右上角的WiFI图标，点第一个`Wireless & Wired Network Setting`，会弹出下面界面：
@@ -68,7 +76,9 @@ DNS Servers: #填主DNS或备DNS都行
 
 &emsp;&emsp;勾选上面的`Automatically configure empty options`，再点下面的`Apply`，然后关闭窗口。
 
-&emsp;&emsp;然后，在桌面上右键新建一个`Empty File`，里面的内容如下（将`<>`内的内容**连同**`<>`替换掉！）：
+
+
+&emsp;&emsp;然后，在桌面上右键新建一个`Empty File`，名为`connect.sh`，里面的内容如下（将`<>`内的内容**连同**`<>`替换掉！）：
 
 ~~~shell
 sudo ifconfig eth0 down
@@ -76,10 +86,12 @@ sudo ifconfig eth0 <IP地址> netmask <掩码>
 sudo ifconfig eth0 hw ether <MAC地址>
 sudo route add default gw <网关>
 sudo ifconfig eth0 up
-sudo /home/pi/scutclient/build/scutclient --username <SCUT账号> --password <SCUT密码>
+sudo nohup sudo /home/pi/scutclient/build/scutclient --username <SCUT账号> --password <SCUT密码>
 ~~~
 
-&emsp;&emsp;然后保存，将这个文件重命名为`connect.sh`。
+&emsp;&emsp;然后保存。
+
+
 
 &emsp;&emsp;然后接上网线，在命令行里运行（执行这个`connect.sh`文件）：
 
@@ -87,7 +99,9 @@ sudo /home/pi/scutclient/build/scutclient --username <SCUT账号> --password <SC
 sudo sh /home/pi/Desktop/connect.sh
 ~~~
 
-&emsp;&emsp;打开浏览器测试一下，看看能不能访问百度。如果不能，执行下面这步；如果行，请跳到下一主题。
+&emsp;&emsp;打开树莓派的浏览器测试一下，看看能不能访问百度。如果不能，执行下面这步；如果行，请跳到下一标题。
+
+
 
 ---
 
@@ -100,7 +114,9 @@ sudo chmod 777 /etc/resolv.conf
 
 &emsp;&emsp;打开`/etc/resolv.conf`，把`nameserver`后面的数字改成`114.114.114.114`，注意`nameserver`和数字之间有一个空格。
 
-&emsp;&emsp;再看看浏览器能不能访问到百度，如果能，执行下面步骤；如果不行，请联系我（因为我没碰到过这种情况）
+
+
+&emsp;&emsp;再看看浏览器能不能访问到百度，如果能，执行下面步骤：
 
 &emsp;&emsp;把改好的`/etc/resolv.conf`复制到桌面，然后在命令行输入：
 
@@ -128,11 +144,13 @@ sudo cp -f /home/pi/Desktop/resolv.conf /etc/resolv.conf
 #将代码copy到本地，安装
 git clone https://github.com/oblique/create_ap
 cd create_ap
-make install
+sudo make install
 
 #安装依赖的库
-apt-get install util-linux procps hostapd iproute2 iw haveged dnsmasq
+sudo apt-get install util-linux procps hostapd iproute2 iw haveged dnsmasq
 ~~~
+
+
 
 &emsp;&emsp;然后我们每次开热点，都可以用如下命令：
 
@@ -141,6 +159,8 @@ sudo create_ap wlan0 eth0 热点名 密码
 ~~~
 
 &emsp;&emsp;它有时候会提示出错，这可能是因为你的`wlan0`已经连接了WiFI，试一下把断开WiFi再执行，或者重启再执行。
+
+&emsp;&emsp;拿手机试一下能不能连接成功并上网，如果能，我们可以开始配置开机自启，如果不能，检查一下上面步骤有没有出错。实在不行请联系我。
 
 &emsp;&emsp;拿手机试一下能不能连接成功并上网，如果能，我们可以开始配置开机自启，如果不能，检查一下上面步骤有没有出错。实在不行请联系我。
 
@@ -165,7 +185,7 @@ sudo route add default gw <网关>
 sudo ifconfig eth0 up
 
 #开机启动WiFi
-sudo create_ap wlan0 eth0 热点名 密码
+sudo nohup create_ap wlan0 eth0 热点名 密码
 ~~~
 
 &emsp;&emsp;这样虽然开机有WiFi，但由于没登陆SCUT，所以还是没网的，你还要执行上面的`connect.sh`文件。不过你可以不用连接屏幕和键盘，直接用SSH就行了。关于SSH的教程，网上有很多，这个就留给Geek的你吧！
