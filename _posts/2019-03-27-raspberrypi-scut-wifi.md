@@ -185,8 +185,14 @@ sudo route add default gw <网关>
 sudo ifconfig eth0 up
 
 #开机启动WiFi
-sudo nohup create_ap wlan0 eth0 热点名 密码
+sudo create_ap wlan0 eth0 热点名 密码
 ~~~
+
+&emsp;&emsp;如果开机没有启动WiFi，将最后一条命令换成：
+
+```shell
+sudo nohup create_ap wlan0 eth0 热点名 密码
+```
 
 &emsp;&emsp;这样虽然开机有WiFi，但由于没登陆SCUT，所以还是没网的，你还要执行上面的`connect.sh`文件。不过你可以不用连接屏幕和键盘，直接用SSH就行了。关于SSH的教程，网上有很多，这个就留给Geek的你吧！
 
