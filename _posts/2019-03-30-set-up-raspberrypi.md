@@ -31,7 +31,7 @@ music-id: 465675773
 
 
 
-## 换源
+## 换源&更新
 
 &emsp;&emsp;众所周知，树莓派官方软件源在中国很慢，所以要换源。编辑软件源list文件：
 
@@ -43,8 +43,8 @@ sudo nano /etc/apt/sources.list
 
 ~~~shell
 #清华大学
-deb http://mirrors.tuna.edu.cn/raspbian/raspbian/ stretch main contrib non-free
-deb-src http://mirrors.tuan.edu.cn/raspbian/raspbian/ stretch main contrib non-free
+deb http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ stretch main contrib non-free
+deb-src http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ stretch main contrib non-free
 
 #中国科技大学
 deb http://mirrors.ustc.edu.cn/raspbian/raspbian/ stretch main contrib non-free
@@ -61,17 +61,11 @@ deb-src http://mirrors.aliyun.com/raspbian/raspbian/ stretch main contrib non-fr
 sudo nano /etc/apt/sources.list.d/raspi.list
 ~~~
 
-&emsp;&emsp;同样，注释掉官方源，换成下面的某一个：
+&emsp;&emsp;同样，注释掉官方源，换成下面这个：
 
 ~~~shell
-#清华大学
-deb http://mirrors.tuan.edu.cn/archive.raspberrypi.org/debian/ stretch main ui
-
 #中国科技大学
 deb http://mirrors.ustc.edu.cn/archive.raspberrypi.org/debian/ stretch main ui
-
-#阿里云
-deb http://mirrors.aliyun.com/archive.raspberrypi.org/debian/ stretch main ui
 ~~~
 
 &emsp;&emsp;然后执行：
@@ -79,6 +73,111 @@ deb http://mirrors.aliyun.com/archive.raspberrypi.org/debian/ stretch main ui
 ~~~shell
 sudo apt-get update && sudo apt-get upgrade -y
 ~~~
+
+&emsp;&emsp;等待漫长的软件更新吧！你可以去我博客看看其他文章先，等更新完成后再继续下面步骤。
+
+
+
+## 换pip源
+
+&emsp;&emsp;换成国内pip源：
+
+~~~shell
+pip install pip -U
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+~~~
+
+&emsp;&emsp;上面是清华源，其他源也行：
+
+~~~shell
+#阿里云
+http://mirrors.aliyun.com/pypi/simple/
+#中国科技大学
+https://pypi.mirrors.ustc.edu.cn/simple/
+#豆瓣(douban)
+http://pypi.douban.com/simple/
+#中国科学技术大学
+http://pypi.mirrors.ustc.edu.cn/simple/
+~~~
+
+
+
+## 必备软件
+
+&emsp;&emsp;在前面加`sudo apt-get install`来安装下面的软件。
+
+~~~shell
+ttf-wqy-zenhei #文泉驿的中文字体
+scim-pinyin #中文输入法，重启生效
+vim #命令行的代码编辑器
+cmake #跨平台的自动化建构系统
+nestopia #玩NES游戏
+smplayer #媒体播放器，VLC太容易卡死了
+~~~
+
+
+
+## 必备Python库
+
+&emsp;&emsp;在前面加`sudo pip install`来安装下面的库。
+
+~~~shell
+
+~~~
+
+
+
+## 杂七杂八
+
+&emsp;&emsp;树莓派3.5mm输出口有底噪，可在`/boot/config.txt`文末加入一行：
+
+~~~shell
+audio_pwm_mode = 2
+~~~
+
+&emsp;&emsp;保存并重启，音质有少量提升。
+
+
+
+---
+
+
+
+
+
+# 深度学习
+
+## opencv3.4
+
+&emsp;&emsp;安装numpy：
+
+~~~shell
+sudo pip3 install numpy
+~~~
+
+&emsp;&emsp;扩大micro SD卡空间：进入`raspi-config`，选择`Advanced Options`，选择`Expand Filesystem`，重启。
+
+&emsp;&emsp;安装所需要的库（一次一行，别一次全装）：
+
+~~~shell
+sudo apt-get install build-essential git cmake pkg-config -y
+sudo apt-get install libjpeg8-dev -y
+sudo apt-get install libtiff5-dev -y
+sudo apt-get install libjasper-dev -y
+sudo apt-get install libpng12-dev -y
+sudo apt-get install libavcodec-dev libavformat-dev libswscale-dev libv4l-dev -y
+sudo apt-get install libgtk2.0-dev -y
+sudo apt-get install libatlas-base-dev gfortran -y
+~~~
+
+&emsp;&emsp;新建一个文件夹叫opencv，并进入该文件夹
+
+~~~shell
+sudo mkdir opencv
+cd opencv
+~~~
+
+
 
 
 
