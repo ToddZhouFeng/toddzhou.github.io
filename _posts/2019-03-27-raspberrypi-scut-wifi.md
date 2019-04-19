@@ -78,7 +78,7 @@ DNS Servers: #填主DNS或备DNS都行
 
 
 
-&emsp;&emsp;然后，在桌面上右键新建一个`Empty File`，名为`connect.sh`，里面的内容如下（将`<>`内的内容**连同**`<>`替换掉！）：
+&emsp;&emsp;然后，在桌面上右键新建一个`Empty File`，名为`connect.sh`，里面的内容如下（将`<>`内的内容**连同**`<>`替换掉！后面都是这样）：
 
 ~~~shell
 sudo ifconfig eth0 down
@@ -188,13 +188,65 @@ sudo ifconfig eth0 up
 sudo create_ap wlan0 eth0 热点名 密码
 ~~~
 
-&emsp;&emsp;如果开机没有启动WiFi，将最后一条命令换成：
+&emsp;&emsp;如果开机没有启动WiFi，在sudo后面加个 nohup ：
 
 ```shell
 sudo nohup create_ap wlan0 eth0 热点名 密码
 ```
 
+&emsp;&emsp;上面这条命令是将输出重定向到nohup文件中，并且即使关闭了当前shell也不会终止该进程。
+
 &emsp;&emsp;这样虽然开机有WiFi，但由于没登陆SCUT，所以还是没网的，你还要执行上面的`connect.sh`文件。不过你可以不用连接屏幕和键盘，直接用SSH就行了。关于SSH的教程，网上有很多，这个就留给Geek的你吧！
+
+
+
+# 防蹭网
+
+&emsp;&emsp;校园网的速度有限，估计一个宿舍4个人用是没问题的，但如果再多几个人，速度就捉急了。而且，估计宿舍里的其他人很大概率会把WiFi密码分享出去，所以，虽然这样有点自私，但还是加个防蹭网措施吧！就是Mac地址白名单！
+
+&emsp;&emsp;先在手机上下一个Fing（安卓/iOS都有），然后连接你的WiFi，点击Fing右上角的刷新，然后你就可以看到目前有哪些设备连接了你的WiFi，随便点进一个设备，下方有一个“MAC地址”，长按可以复制。将白名单设备全部连到这个WiFi，然后将它们的Mac地址复制下来。
+
+&emsp;&emsp;回到我们的树莓派。输入
+
+~~~shell
+sudo nano /etc/hostapd/hostapd.accept
+~~~
+
+&emsp;&emsp;然后将Mac地址打上去，每个Mac地址占一行。保存并退出：按`Ctrl+x`，`y`，回车。
+
+​	原来的开启热点的命令是：
+
+~~~shell
+sudo create_ap wlan0 eth0 热点名 密码
+~~~
+
+&emsp;&emsp;换成：
+
+~~~shell
+sudo create_ap --mac-filter wlan0 eth0 热点名 密码
+~~~
+
+&emsp;&emsp;重新启动热点即可生效。
+
+
+
+# 优化
+
+&emsp;&emsp;WiFi信号在信道上传播，如果某个信道有多个WiFi，则信号间可能会有影响。我们可以将热点换到WiFi较少的信道即可。如何查看信道呢？你可以上网查一下，我用的是CloudWalker（安卓）这个软件。
+
+&emsp;&emsp;修改信道的方法很简单，在启动命令中加一点东西：
+
+~~~shell
+sudo create_ap -c 信道 wlan0 eth0 热点名 密码
+~~~
+
+&emsp;&emsp;如果要兼顾防蹭网，则输入：
+
+~~~shell
+sudo create_ap -c 信道 --mac-filter wlan0 eth0 热点名 密码
+~~~
+
+&emsp;&emsp;我用的是信道10，以供参考。
 
 
 
