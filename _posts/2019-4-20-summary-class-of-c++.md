@@ -23,7 +23,9 @@ music-id: 465675773
 &emsp;&emsp;类的声明以关键字`struct`开始，紧跟着类名和类体（类体可为空）：
 
 ~~~c++
-struct
+struct Sales_data{
+    //类体
+};  //不要漏了分号！
 ~~~
 
 &emsp;&emsp;每个类内部是一个新的作用域，所以其内部定义的名字可以和外部重复。
@@ -122,7 +124,7 @@ std::string isbn() const {return this->bookNo;}
 
 &emsp;&emsp;如果我们定义的默认构造函数和合成的默认构造函数干的事差不多，则可以直接在默认构造函数的定义的括号后写上`= default;`
 
-&emsp;&emsp;值得注意的是，如果你的编译器不支持类内初始值，你就不能这样写。、
+&emsp;&emsp;值得注意的是，如果你的编译器不支持类内初始值，你就不能这样写。	
 
 
 
@@ -146,4 +148,59 @@ Sales_data(const std::string &s) {
 Sales_data(const std::string &s, unsigned n, double p): bookNo(s), units_sold(n), revenue(p*n) {}
 ~~~
 
-&emsp;&emsp;因为这些构造函数的唯一的作用是赋初值，所以函数体为空。
+&emsp;&emsp;因为这些构造函数的唯一的作用是赋初值，所以函数体为空。在定义类时写成：
+
+~~~c++
+Sales_data data1("978-7-121-15535-2", 0, 0.0);
+~~~
+
+
+
+## 复制构造函数
+
+&emsp;&emsp;如果要通过另一个类类型来初始化，则需要通过复制构造函数将数据复制过来。复制构造函数的声明为：
+
+~~~C++
+struct Sales_data{
+    Sales_data(const Sales_data & ); //形参为常引用，避免误修改。
+};
+~~~
+
+&emsp;&emsp;下面是复制构造函数的两种使用方式：
+
+~~~C++
+Sales_data data1;
+Sales_data data2(data1);
+Sales_data data3=data1;
+~~~
+
+&emsp;&emsp;除了主动调用复制构造函数，当函数有类类型参数或返回类类型值时，都需要调用复制构造参数（即所有临时建立的类都要），即：
+
+~~~C++
+Sales_data function(Sales_data a){ //调用复制构造函数
+    return a;//调用复制构造函数
+}
+~~~
+
+
+
+### 浅复制和深复制
+
+&emsp;&emsp;其实如果我们不写复制构造函数，编译器会隐式生成一个复制构造函数，但这个只能复制字面值，即int就复制int，int* 就复制地址。这就叫浅复制。
+
+&emsp;&emsp;浅复制有个问题，就是如果要复制指针，则只是复制指针所指的地址，而不分配内存空间。如果复制得到的对象被析构了，那么原对象的指针就会指向空地址，等到原对象析构时，就会产生“释放空指针”的错误。
+
+&emsp;&emsp;所以我们需要深复制：手动写一个复制构造函数，在复制构造函数里面分配新的内存空间，再复制。即
+
+~~~C++
+//我们另外一个类来示范
+struct A{
+    A(const A &a){
+        p = new int; //分配新的内存空间
+        *p=*a.p; //复制具体值，而非地址
+    }
+    
+    int *p;
+};
+~~~
+
