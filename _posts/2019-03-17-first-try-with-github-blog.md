@@ -97,3 +97,7 @@ music-id: 465675773
 ~~~
 
 缺点是必须是音乐文件（mp3√，其他未知），可能需要云端储存。
+
+
+
+<iframe src="//player.bilibili.com/player.html?aid=18557774&cid=30620323&page=5" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
