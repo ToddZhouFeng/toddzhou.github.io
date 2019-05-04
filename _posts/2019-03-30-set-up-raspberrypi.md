@@ -21,9 +21,9 @@ music-id: 465675773
 
 ##第一次开机
 
-&emsp;&emsp;我的树莓派是3B/3B+，系统为`2018-11-13-raspbian-stretch.img`，也就是带桌面但没那么多软件那个。安装系统只需要10分钟。
+&emsp;&emsp;我的树莓派是3B/3B+，系统为`2018-11-13-raspbian-stretch.img`，就是带桌面但没那么多软件那个。烧录系统只需要10分钟。
 
-&emsp;&emsp;第一次开机时间有点久。进入桌面后，先设置Country(China)，Language(Chinese)，Timezone(Shanghai)，勾选Use US keyboard。接着输入‘pi’用户新的密码。然后连接WiFi。再更新软件，时间有点久，而且容易出错，跳过。
+&emsp;&emsp;第一次开机时间有点久。进入桌面后，先设置Country(China)，Language(Chinese)，Timezone(Shanghai)，勾选Use US keyboard。接着输入‘pi’用户新的密码。然后连接WiFi。不要更新软件，更新的话时间有点久，而且容易出错，跳过。
 
 &emsp;&emsp;重启。
 
@@ -115,14 +115,25 @@ nestopia #玩NES游戏
 smplayer #媒体播放器，VLC太容易卡死了
 ~~~
 
+&emsp;&emsp;还有一些软件要通过安装包安装：
 
+1. 对rar解压支持（貌似有错误:(
+
+   ~~~shell
+   cd ~/Download
+   sudo wget http://rarlab.com/rar/rarlinux-3.8.0.tar.gz
+   tar zxvf rarlinux.3.8.0.tar.gz
+   cd rar
+   make && make install
+   ~~~
 
 ## 必备Python库
 
 &emsp;&emsp;在前面加`sudo pip install`来安装下面的库。
 
 ~~~shell
-
+numpy
+matplotlib
 ~~~
 
 
@@ -135,7 +146,7 @@ smplayer #媒体播放器，VLC太容易卡死了
 audio_pwm_mode = 2
 ~~~
 
-&emsp;&emsp;保存并重启，音质有少量提升。
+&emsp;&emsp;保存并重启，音质有少量提升。顺便说一句，3B+播放时如果把音量调为0会听到明显的电流声，3B反而没有，3B的音质竟然比3B+好，因吹斯听。
 
 
 
@@ -147,7 +158,9 @@ audio_pwm_mode = 2
 
 # 深度学习
 
-## opencv3.4
+## Opencv 3.4.0
+
+> 参考博客[【树莓派】树莓派+OpenCV3.4 + python3.5 成功以及注意细节](https://www.jianshu.com/p/3180a253fe3c)，安装后占4.8GB
 
 &emsp;&emsp;安装numpy：
 
@@ -173,11 +186,125 @@ sudo apt-get install libatlas-base-dev gfortran -y
 &emsp;&emsp;新建一个文件夹叫opencv，并进入该文件夹
 
 ~~~shell
-sudo mkdir opencv
+mkdir opencv
 cd opencv
 ~~~
 
+&emsp;&emsp;从Github上下载安装文件
+
+~~~shell
+wget https://github.com/Itseez/opencv/archive/3.4.0.zip
+wget https://github.com/Itseez/opencv_contrib/archive/3.4.0.zip
+~~~
+
+&emsp;&emsp;解压这两个文件
+
+~~~shell
+sudo unzip 3.4.0.zip 3.4.0.zip.1
+~~~
+
+&emsp;&emsp;创建build文件夹，并进入
+
+~~~shell
+cd opencv-3.4.0
+mkdir build
+cd build
+~~~
+
+&emsp;&emsp;然后开始cmake，以下命令在同一行，但不要急！看命令后面的解释：
+
+~~~shell
+cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D INSTALL_C_EXAMPLES=ON -D INSTALL_PYTHON_EXAMPLES=ON -D OPENCV_EXTRA_MODULES_PATH=/home/pi/opencv/opencv_contrib-3.4.0/modules -D BUILD_EXAMPLES=ON -D WITH_LIBV4L=ON PYTHON3_EXECUTABLE=/usr/bin/python3.5 PYTHON_INCLUDE_DIR=/usr/include/python3.5 PYTHON_LIBRARY=/usr/lib/arm-linux-gnueabihf/libpython3.5m.so PYTHON3_NUMPY_INCLUDE_DIRS=/usr/lib/python3/dist-packages/numpy/core/include ..
+~~~
+
+&emsp;&emsp;**千万要注意，上面的路径不要写错！**最好去看看有没有对应的文件或文件夹，也就是下面几个
+
+~~~shell
+OPENCV_EXTRA_MODULES_PATH=/home/pi/Downloads/opencv_contrib-3.4.0/modules #解压出来的东西
+PYTHON_INCLUDE_DIR=/usr/include/python3.5 
+PYTHON_LIBRARY=/usr/lib/arm-linux-gnueabihf/libpython3.5m.so 
+PYTHON3_NUMPY_INCLUDE_DIRS=/usr/lib/python3/dist-packages/numpy/core/include #numpy的安装路径
+~~~
+
+&emsp;&emsp;确保无误后再开始cmake
+
+&emsp;&emsp;最后开始编译，欲速则不达，不要用make -j4等加速
+
+~~~shell
+sudo make && sudo make install
+~~~
+
+&emsp;&emsp;等四五个小时后就安装完成了。
 
 
 
+## Tensorflow 1.13.1
+
+> 参考博客[从零开始：在树莓派上构建tensorflow——详细至极](https://blog.csdn.net/qq_38960810/article/details/78640171)，他装的是1.1.0，我装的是1.13.1。安装后占200多M
+
+&emsp;&emsp;先下载这些库，其实你不安装也行，待会安装tensorflow时它会自动安装，但那时容易出错。
+
+~~~shell
+sudo pip3 install grpcio protobuf numpy tensorboard gast termcolor astor keras absl futures enum markdown h5py mock pbr
+~~~
+
+&emsp;&emsp;如果那个h5py装不了，可以去浏览器下载：[https://piwheels.org/simple/h5py/h5py-2.9.0-cp35-cp35m-linux_armv7l.whl](https://piwheels.org/simple/h5py/h5py-2.9.0-cp35-cp35m-linux_armv7l.whl)（这个链接就是pip3 install之后出现的连接），然后执行：
+
+~~~shell
+cd /home/pi/Downloads/ #去到下载目录
+sudo pip3 install h5py-2.9.0-cp35-cp35m-linux_armv7l.whl
+~~~
+
+&emsp;&emsp;其他安装不了的库也这样安装。
+
+
+
+&emsp;&emsp;如果上网的姿势很科学，可以直接：
+
+~~~shell
+sudo pip3 install tensorflow
+~~~
+
+&emsp;&emsp;如果你觉得上面的速度太慢了，可以去浏览器下载：[https://piwheels.org/simple/tensorflow/tensorflow-1.13.1-cp35-none-linux_armv7l.whl](https://piwheels.org/simple/tensorflow/tensorflow-1.13.1-cp35-none-linux_armv7l.whl)，然后执行：
+
+~~~shell
+cd /home/pi/Downloads #去到下载目录
+sudo pip3 install tensorflow-1.13.1-cp35-none-linux_armv7l.whl
+~~~
+
+&emsp;&emsp;然后就等等等等30~60分钟吧。
+
+
+
+&emsp;&emsp;下面我们试试图像识别，运行下面的命令：
+
+~~~shell
+cd && mkdir tensorflow
+cd tensorflow/
+wget https://raw.githubusercontent.com/tensorflow/models/tutorials/image/imagenet/classify_image.py
+~~~
+
+&emsp;&emsp;然后你就会在/home/pi/tensorflow文件夹里看到一个classify_image.py，运行该程序，它会自动下载图像识别库（85M）。
+
+&emsp;&emsp;等到它下载完成后，通过下面命令进行图像识别：
+
+~~~shell
+python3 /home/pi/tensorflow/classify_image.py --image_file <图片路径>
+~~~
+
+&emsp;&emsp;比如我在网上找了一张hamster图片：
+
+![仓鼠](https://static.wamiz.fr/images/animaux/rongeurs/crop/medium/hamster.jpg)
+
+&emsp;&emsp;运行后显示的结果是（效果还行）：
+
+~~~shell
+hamster (score = 0.70514)
+mink (score = 0.00465)
+polecat, fitch, foulmart, foumart, Mustela putorius (score = 0.00370)
+black-footed fettet, ferret, Mustela nigripes (score = 0.00274)
+skunk, polecat, wood pussy (score = 0.00266)
+~~~
+
+&emsp;&emsp;貌似只能识别动物和物品。
 

@@ -28,7 +28,7 @@ music-id: 465675773
 * Ubuntu对树莓派3B+的支持不是很好，官网上提供的系统根本用不了。
 * Ubuntu太过于臃肿，树莓派孱弱的性能不是很够，而且Ubuntu耗电貌似大一点。
 
-&emsp;&emsp;于是我决定找到在Debian系统上开WiFi的方法。显然，我找到了，并且用得很开心。但，这个配置的过程十分漫长......请做好准备（其实也就半小时）。
+&emsp;&emsp;于是我决定找到在Debian系统上开WiFi的方法。显然，我找到了，已经用上了哦。但，这个配置的过程十分漫长......请做好准备（其实也就半小时）。
 
 
 
@@ -51,7 +51,7 @@ sudo apt-get install cmake
 
 
 
-&emsp;&emsp;按`Ctrl`+`t`打开命令行，**依次**输入以下命令：
+&emsp;&emsp;按`Ctrl`+`Alt`+`t`打开命令行，**依次**输入以下命令：
 
 ~~~shell
 git clone https://github.com/scutclient/scutclient.git
@@ -226,6 +226,8 @@ sudo create_ap --mac-filter wlan0 eth0 热点名 密码
 
 &emsp;&emsp;重新启动热点即可生效。
 
+&emsp;&emsp;后期需要添加设备的话，可以先用手机或电脑开热点，把设备连接到热点，然后在手机或电脑上看Mac地址，再添加到`/etc/hostapd/hostapd.accept`（超级麻烦，所以如果是别的宿舍来借网，我都是直接用回原来的命令开热点）
+
 
 
 # 优化
@@ -251,3 +253,8 @@ sudo create_ap -c 信道 --mac-filter wlan0 eth0 热点名 密码
 # 结语
 
 &emsp;&emsp;虽然看起来很多要做，但对于熟悉命令行的同学来说，这点命令也不算多。我按照这个实践过后已经成功了，如果你有任何问题，请联系我！我的邮箱为310378072@qq.com。
+
+&emsp;&emsp;P.s. 树莓派配置完后，如果断开热点，并通过WiFi连接网络，可能会连接不了。我初步猜测可能是掩码的问题，但懒得研究怎么弄...于是采取了个简单粗暴的方法`sudo ifconfig eth0 down`，然后就连上了。
+
+&emsp;&emsp;P.P.s. 3B和3B+我都试了弄热点，虽然没仔细测过，个人感觉在供电充足的情况下，3B+会比3B快一点。但由于3B+需要2.5A电流（普通的充电器达不到，快充没协议也达不到），所以3B反而好一丢丢。
+
