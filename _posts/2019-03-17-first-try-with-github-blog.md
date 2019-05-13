@@ -108,3 +108,9 @@ music-id: 465675773
 <iframe src="https://player.bilibili.com/player.html?aid=45368874&cid=79420762&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="95%" height="450"> </iframe>
 </div>
 
+
+# 文章的分类2019/5/12
+
+最近写了几篇文章，分别属于不同领域，真的是很乱啊，然后决定规定一下分类法则：
+
+* 大类
