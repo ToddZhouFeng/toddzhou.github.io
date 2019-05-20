@@ -22,11 +22,11 @@ music-id: 465675773
 
 &emsp;&emsp;类的声明以关键字`struct`开始，紧跟着类名和类体（类体可为空）：
 
-~~~c++
+```c++
 struct Sales_data{
     //类体
 };  //不要漏了分号！
-~~~
+```
 
 &emsp;&emsp;每个类内部是一个新的作用域，所以其内部定义的名字可以和外部重复。
 
@@ -38,22 +38,22 @@ struct Sales_data{
 
 &emsp;&emsp;类内数据的定义方法和类外相同，比如我们的销售数据要有每本书的编号bookNo，卖出的数量units_sold，收到的钱revenue。如下
 
-~~~c++
+```c++
 struct Sales_data{
     std::string bookNo;
     unsigned units_sold = 0;
     double revenue = 0.0;
 }
-~~~
+```
 
 &emsp;&emsp;我们可以为数据成员提供**初始值**（就像上面的units_sold和revenue）,没有初始值的成员将被默认初始化（如bookNo将为空字符串）。
 
 &emsp;&emsp;如果要在类外使用数据成员，只需在类类型后面加“.变量”：
 
-~~~c++
+```c++
 Sales_data data1;
 cout<<data1,revenue<<std::endl; //输出0.0
-~~~
+```
 
 ---
 
@@ -63,7 +63,7 @@ cout<<data1,revenue<<std::endl; //输出0.0
 
 &emsp;&emsp;成员函数的声明在类内，定义则可以在类内或内外，在内外定义时要指明函数的作用域（因为类本身就是一个作用域）。比如我们给销售数据类加点东西：
 
-~~~c++
+```c++
 struct Sales_data{
     std::string isbn() const {return bookNo;}//返回isbn码 //类内声明+定义
     double avg_price() const;//返回平均售价 //类内声明，注意不要忘了";"
@@ -74,13 +74,13 @@ struct Sales_data{
     double revenue = 0.0;
 }
 
-double Sales_data::avg_price() const{#类外定义，注意不要忘了"::"
+double Sales_data::avg_price() const{//类外定义，注意不要忘了"::"
     if (units_sold)
     	return revenue/units_sold;
     else
     	return 0;
 }
-~~~
+```
 
 
 
@@ -107,9 +107,9 @@ std::string isbn() const {return this->bookNo;}
 
 # 构造函数
 
-&emsp;&emsp;构造函数是特殊的成员函数，其任务是初始化类对象的数据成员，如果在构造函中没有对数据成员
+&emsp;&emsp;构造函数是特殊的成员函数，其任务是初始化类对象的数据成员，如果在构造函数中没有对数据成员
 
-初始化。它有几个特点：
+初始化，则编译器会对数据成员赋默认值。构造函数有几个特点：
 
 * 必须声明在public部分（否则无法在类外使用）
 * 构造函数的名字与类名相同；
@@ -135,7 +135,7 @@ std::string isbn() const {return this->bookNo;}
 
 ### default
 
-&emsp;&emsp;如果我们定义的默认构造函数和合成的默认构造函数干的事差不多，则可以直接在默认构造函数的**定义**（不是声明）的括号后写上`= default;`
+&emsp;&emsp;如果我们定义的默认构造函数和合成的默认构造函数干的事差不多，则可以直接在构造函数的声明（或定义）的参数括号后写上`= default;`
 
 &emsp;&emsp;值得注意的是，如果你的编译器不支持类内初始值，你就不能这样写。	
 
@@ -149,23 +149,23 @@ Sales_data(const std::string &s): bookNo(s) {}
 
 &emsp;&emsp;像上面一样，我们可以在默认函数的括号后面加`数据成员(形参)`来初始化数据成员，在这里其相当于：
 
-~~~c++
+```c++
 Sales_data(const std::string &s) {
     bookNo=s;
 }
-~~~
+```
 
 &emsp;&emsp;如果要对多个数据成员初始化，它们之间用逗号隔开：
 
-~~~c++
+```c++
 Sales_data(const std::string &s, unsigned n, double p): bookNo(s), units_sold(n), revenue(p*n) {}
-~~~
+```
 
 &emsp;&emsp;因为这些构造函数的唯一的作用是赋初值，所以函数体可以为空。在定义类时写成：
 
-~~~c++
+```c++
 Sales_data data1("978-7-121-15535-2", 0, 0.0);
-~~~
+```
 
 
 
@@ -188,27 +188,28 @@ Sales_data data1("978-7-121-15535-2", 0, 0.0);
 
 &emsp;&emsp;如果要通过另一个类类型来初始化，则需要通过复制构造函数将数据复制过来。复制构造函数的声明为：
 
-~~~C++
+```C++
 struct Sales_data{
     Sales_data(const Sales_data & ); //形参为必须是引用，且最好是常引用，避免误修改。
 };
-~~~
+```
 
 &emsp;&emsp;下面是复制构造函数的两种使用方式：
 
-~~~C++
+```C++
 Sales_data data1;
 Sales_data data2(data1);
 Sales_data data3=data1;
-~~~
+Sales_data data4={"9-999-99999-9", 0, 0。0};//注意：这种写法只适用于聚合类（仅有数据成员而无成员函数的类）
+```
 
 &emsp;&emsp;除了主动调用复制构造函数，当函数**有类类型参数**或**返回类类型值**时，都需要隐式地调用复制构造参数（即用到临时的类类型时都要），即：
 
-~~~C++
+```C++
 Sales_data function(Sales_data a){ //调用复制构造函数
     return a;//调用复制构造函数
 }
-~~~
+```
 
 &emsp;&emsp;上面这段也是复制构造函数的参数必须是引用的原因。如果不是引用，则会建立临时量，而临时量本身又需要用到复制构造函数，从而造成循环。
 
@@ -222,7 +223,7 @@ Sales_data function(Sales_data a){ //调用复制构造函数
 
 &emsp;&emsp;所以我们需要深复制：手动写一个复制构造函数，在复制构造函数里面分配新的内存空间，再复制。即
 
-~~~C++
+```C++
 //我们另外一个类来示范
 struct A{
     //数据成员
@@ -234,9 +235,27 @@ struct A{
         *p=*a.p; //复制具体值，而非地址
     }
 };
-~~~
+```
 
 &emsp;&emsp;《C++ Primer》239页：使用Vector类或string类可以避免分配和释放内存带来的复杂性。
+
+
+
+### delete（禁止复制）
+
+&emsp;&emsp;如果我们不希望编译器为我们隐式生成一个复制构造函数（某些对象复制是没意义的，比如iostream，见《C++ Primer》449页），我们可以在第一次声明时，在参数的括号后面加`=delete`：
+
+```c++
+struct NoCopy{
+    NoCopy() = default;
+    NoCopy(const NoCopy&) = delete;
+    NoCopy& operator=(const NoCopy&) = delete;
+};
+```
+
+&emsp;&emsp;`delete`不仅适用于隐式的复制构造函数，也适用于其他隐式生成的函数（比如上面的拷贝赋值运算符的重载），析构函数除外。
+
+&emsp;&emsp;另外，还有一种方法禁止复制，那就是将复制构造函数声明在`private`中，并且不定义它。这样在编译的过程中就会出错。尽量不要用这种方法，而是用`delete`。
 
 
 
@@ -244,15 +263,15 @@ struct A{
 
 &emsp;&emsp;就是一个构造函数用其他构造函数来初始化。比如假如我们定义了：
 
-~~~c++
+```c++
 Sales_data(const std::string &s, unsigned n, double p): bookNo(s), units_sold(n), revenue(p*n) {}
-~~~
+```
 
 &emsp;&emsp;我们可以利用这个来定义：
 
-~~~c++
+```c++
 Sales_data(const std::string &s): Sales_data(s, 0, 0) {}//委托构造函数
-~~~
+```
 
 &emsp;&emsp;这样，当运行后面这个构造函数时，实际上是先执行第一个构造函数，再执行后面这个。
 
@@ -262,54 +281,94 @@ Sales_data(const std::string &s): Sales_data(s, 0, 0) {}//委托构造函数
 
 &emsp;&emsp;假如我们有某个函数需要接收一个Sales_data对象，而Sales_data有一个这样的构造函数：
 
-~~~c++
+```c++
 void function(const Sales_data &item);
 
 Sales_data::Sales_data(const std::string &s): Sales_data(s, 0, 0) {}
-~~~
+```
 
 &emsp;&emsp;我们传递一个string对象：
 
-~~~c++
+```c++
 function(string("9-999-99999-9"));
-~~~
+```
 
 &emsp;&emsp;编译器会先掉用构造函数，生成一个临时的Sales_data，由于item是一个常量引用，我们可以把临时变量传递给item。
 
 &emsp;&emsp;另一种用到隐式类类型转换的情况是拷贝：
 
-~~~c++
+```c++
 Sales_data item="9-999-99999-9";
-~~~
+```
 
 &emsp;&emsp;这种方法只能适用于只有一个变量的构造函数；并且只能适用于“一步的类类型转换”，比如下面这种就不行：
 
-~~~c++
+```c++
 function("9-999-99999-9");//两步转换，先是将"9-999-99999-9"转化为string，然后再将string转化为Sales_data
-~~~
+```
 
 
 
 ### 抑制隐式类类型转换
 
-&emsp;&emsp;要是我们想禁止这种转换，我们可以在构造函数的**声明**前加`explicit`来阻止（在定义处加explicit会报错）：
+&emsp;&emsp;要是我们想禁止这种转换（比如我们想对“=”进行重载），我们可以在构造函数的**声明**前加`explicit`来阻止（在定义处加explicit会报错）：
 
-~~~c++
+```c++
 explicit Sales_data::Sales_data(const std::string &s): Sales_data(s, 0, 0) {}
-~~~
+```
 
 &emsp;&emsp;注意，`explicit`只能用于只有一个参数的构造函数（有多个参数怎么进行类类型转换啊~）。在这种情况下，我们依然可以显式的使用构造函数来转换：
 
-~~~c++
+```c++
 function( string("9-999-99999-9") );//错误
 function( Sales_data( string("9-999-99999-9") ) );//正确
-~~~
+```
 
 ---
 
 
 
 # 析构函数
+
+&emsp;&emsp;析构函数是特殊的成员函数，与构造函数相反，其任务是销毁类对象的数据成员。析构函数的基本特点是：
+
+* 名字由波浪号+类名构成，比如`~Sales_data();`
+* 不接受参数，不能重载，也不返回值。因此每个类只有一个析构函数；
+* 首先执行函数体，之后按初始化顺序的逆序销毁成员；
+
+&emsp;&emsp;析构函数被调用的时机：
+
+* 变量离开作用域时；
+* 对象被销毁时；
+* 动态分配的对象（`new`），对指向它的指针用`delete`运算符时；
+* 临时对象，当创建它的表达式结束时；
+
+&emsp;&emsp;特别的，当指向对象的引用或指针离开作用域时，并不会调用析构函数。
+
+
+
+## 合成的析构函数
+
+&emsp;&emsp;当一个类未定义析构函数时，编译器会为它定义一个合成的析构函数，合成的析构函数等价于：
+
+```c++
+class Sales_data{
+public:
+    ~sales_data(){}
+}
+```
+
+&emsp;&emsp;注意到它的函数体为空。在此再次强调：无论函数体是否为空，析构函数**首先执行函数体，之后按初始化顺序的逆序销毁成员**。也就是说析构函数内的内容对后面的析构无影响。
+
+
+
+## 析构指针
+
+&emsp;&emsp;销毁一个指针时，指针所指向的对象并不会被删除。因此如果要析构指针，要手动`delete`它所指的对象。我们这里的指针是内置的指针类型，C++还有一种“智能指针”，它可以自动销毁，无需手动`delete`。
+
+
+
+
 
 
 
