@@ -61,7 +61,7 @@ cout<<data1,revenue<<std::endl; //输出0.0
 
 # 成员函数
 
-&emsp;&emsp;成员函数的声明在类内，定义则可以在类内或内外，在内外定义时要指明函数的作用域（因为类本身就是一个作用域）。比如我们给销售数据类加点东西：
+&emsp;&emsp;成员函数的声明在类内，定义则可以在类内或内外（如果在类内，则自动是内联的），在内外定义时要指明函数的作用域（因为类本身就是一个作用域）。比如我们给销售数据类加点东西：
 
 ~~~c++
 struct Sales_data{
@@ -95,7 +95,7 @@ total.isbn();#伪代码，相当于：Sales_data::isbn(&total)
 
 &emsp;&emsp;如果你的类类型是一个常量类（即具体化类时用了const），由于this指针是一个指向非常量的常量指针，所以不能绑定到常量对象上。此时可以通过在函数后面加const，使this能指向常量。比如上上面的`isbn()`。推荐凡是不改变类数据的函数都加上const
 
-&emsp;&emsp;最后说一句，this是隐式参数意味着我们不能定义this，但我们依然可以在函数内使用this，比如上面`isbn()`可以写成：
+&emsp;&emsp;最后说一句，this是隐式参数意味着我们不能定义this，但我们依然可以在函数内使用或返回this指针，比如上面`isbn()`可以写成：
 
 ~~~c++
 std::string isbn() const {return this->bookNo;}
@@ -174,7 +174,13 @@ Sales_data data1("978-7-121-15535-2", 0, 0.0);
 * 如果数据成员是const或引用或“某种未提供默认构造函数的类类型”，则只能用初始化；
 * 在底层中，实际是先初始化后赋值，所以初始化的效率比较高。
 
-&emsp;&emsp;所以尽量使用初始化
+&emsp;&emsp;所以尽量使用初始化。
+
+
+
+### 类的包含
+
+&emsp;&emsp;假如
 
 
 
@@ -362,9 +368,11 @@ public:
 
 
 
-## 析构指针
+## 析构指针对象
 
 &emsp;&emsp;销毁一个指针时，指针所指向的对象并不会被删除。因此如果要析构指针，要手动`delete`它所指的对象。我们这里的指针是内置的指针类型，C++还有一种“智能指针”，它可以自动销毁，无需手动`delete`。
+
+---
 
 
 
@@ -374,7 +382,7 @@ public:
 
 ```c++
 class Sales_data{
-public://以下整个程序内可被访问
+public://以下整个程序内可被访问//公有成员
     Sales_data() = default;
     Sales_data(const std::string &s, unsigned n, double p): bookNo(s), units_sold(n), revenue(p*n) {}
 private://以下可被类的成员函数访问
@@ -384,11 +392,112 @@ private://以下可被类的成员函数访问
 };
 ```
 
-&emsp;&emsp;特别的，如果在访问说明符前声明数据对象或成员函数，对于`struct`则默认为`public`，对于`class`则默认为`private`。这是`struct`和`class`的唯一区别。
+&emsp;&emsp;特别的，如果在访问说明符前声明数据成员或成员函数，对于`struct`则默认为`public`，对于`class`则默认为`private`。这是`struct`和`class`的唯一区别。
 
 
 
+## 友元
+
+&emsp;&emsp;如果希望类外的某个函数，或其他类能访问非公有成员，可以将其声明为友元，声明的位置不限（可以在public或private等）：
+
+```c++
+class Sales_data{
+friend Sales_data add(const Sales_data&, const Sales_data&);
+friend std::istream& read(std::istream&, Sales_data&);
+};
+
+Sales_data add(const Sales_data&, const Sales_data&);
+friend std::istream& read(std::istream&, Sales_data&);
+```
+
+&emsp;&emsp;最好在类定义开始或结束前的位置集中声明友元。注意，友元的声明仅指定了访问权限，并非函数声明，我们还是需要在类外声明函数。另外，友元必须和类在同一个作用域内。
+
+&emsp;&emsp;如果想要将某个类的成员函数声明为友元，必须仔细组织代码结构：
+
+```c++
+class A{
+    void function();//声明，但不定义
+};
+
+class B{
+    friend void A::function();
+}
+
+void A::function(){}//在A声明了友元后再定义，这样才能访问到A
+```
 
 
 
+# 其他成员
+
+## 可变数据成员
+
+&emsp;&emsp;如果我们想要修改类的某个数据成员，即使是在一个const成员函数内。可以在变量的声明前加入`mutable`:
+
+```c++
+class A{
+public:
+    void function() const
+private:
+    mutable int a;
+};、
+
+void A::function(){
+    ++a;
+}
+```
+
+
+
+## 静态成员
+
+### 声明和定义
+
+&emsp;&emsp;对于一般的数据成员，每个类类型都有自己的版本；而有时候我们希望所有的类类型都共有一个数据成员（也就只有一个版本）。可以在变量的声明前加入`static`：
+
+```c++
+class A{
+public:
+    static int a=10;//在类内声明并提供初始值
+    static int b;
+}
+int A::a;//在类外定义，不再指定初始值
+int A::b=20;//在类外定义//不要忘了int
+```
+
+&emsp;&emsp;静态成员不能通过特定的类类型去初始化，必须在类内声明，在类外定义（在类外定义时不能加`static`）。在类内声明时，可以提供一个初始值，这样在类外定义时就不能再指定初始值。静态成员实际上类似于全局变量（因为在程序中有且只有一个），所以我们**必须在类外定义**，这样编译器才能为它分配空间。
+
+### 使用
+
+&emsp;&emsp;有两种方式使用静态成员：通过类，或通过某一类类型
+
+```c++
+A sample;
+A::a=20;//通过“类::静态成员”访问
+sample.a=20;//通过某一的类类型访问
+```
+
+### 特殊
+
+&emsp;&emsp;静态成员可以是不完全类型（仅声明而未定义的类），比如：
+
+```c++
+class A{
+public:
+    static A c;//如果c不是静态成员，这种写法是错误的
+}
+A A::c=//略
+```
+
+&emsp;&emsp;而且其他成员函数可以将静态成员作为默认实参：
+
+```c++
+class A{
+public:
+    static int a=10;
+    void function(int = a);
+}
+int A::a;
+void A::function(int num=a){}//略
+```
 
