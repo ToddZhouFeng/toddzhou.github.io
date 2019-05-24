@@ -14,9 +14,9 @@ music-id: 465675773
 {:toc}
 # 基本概念
 
-&emsp;&emsp;重载运算符是一种特殊的函数，用于对类类型进行特定的操作。它的定义形式如下：
+&emsp;&emsp;重载运算符是一种特殊的函数，使得类可以依靠运算符进行特点的操作。它的定义形式如下：
 
-~~~c++
+```c++
 //声明为成员函数
 [类型] [类名]::operator[运算符]( [参数表] ){
     //操作
@@ -26,7 +26,7 @@ music-id: 465675773
 [类型] operator[运算符]( [类名],[参数表] ){
     //操作
 }
-~~~
+```
 
 * 参数的数量与该运算符作用的运算对象数量一样多
 * 若运算符函数是成员函数，则它左侧（第一个）运算对象绑定到this指针上，故它的（显式）参数数量要少一个
@@ -53,8 +53,8 @@ music-id: 465675773
 
 &emsp;&emsp;考虑`<<`的使用方法：`cout<<类类型`，所以第一个对象是`ostream`，第二个对象是我们的类，故我们声明为非成员函数，并且声明为类的友元：
 
-~~~c++
-Sales_data{
+```c++
+class Sales_data{
 private:
     std::string bookNo;
     unsigned units_sold = 0;
@@ -62,7 +62,7 @@ private:
 public:
     friend ostream& operator<<(ostream &, const Sales_data);
 };
-~~~
+```
 
 &emsp;&emsp;由于`ostream`无法被复制，所以它的形参和返回值都是引用；而由于我们一般不改变类的数据，所以类用`const`修饰。
 
@@ -70,8 +70,8 @@ public:
 
 &emsp;&emsp;考虑`>>`的用法：`cin>>类类型`，所以第一个对象为`istream`，第二个对象是我们的类，故和`<<`的重载方法差不多：
 
-~~~c++
-Sales_data{
+```c++
+class Sales_data{
 private:
     std::string bookNo;
     unsigned units_sold = 0;
@@ -79,11 +79,126 @@ private:
 public:
     friend istream& operator>>(istream &, Sales_data &);
 };
-~~~
+```
 
 &emsp;&emsp;同样，`istream`不能被复制，故形参和返回值也都是引用；而我们需要改变原类类型的值，故类的形参是引用。特别的，我们在定义输入重载函数时，需要考虑输入失败的情况，并要从失败中恢复，并将流状态设置为`failbit`（见《C++ Pimer》496页）
 
 
 
-## 算术和关系运算符
+## 算术和关系运算符（+、-、==、!=、<、>等）
 
+&emsp;&emsp;算术运算符有三个特点：
+
+1. 左右对象可交换（故一般定义为**友元函数**）
+2. 不改变操作对象的值（故形参为**常量引用**）
+3. 返回一个临时的类类型（故返回局部变量的副本）
+
+&emsp;&emsp;以加法为例：
+
+```c++
+class Sales_data{
+private:
+    std::string bookNo;
+    unsigned units_sold = 0;
+    double revenue = 0.0;
+public:
+    friend Sales_data operator+(const Sales_data &lhs, const Sales_data &rhs);
+};
+
+Sales_data operator+(const Sales_data &lhs, const Sales_data &rhs){
+    Sales_data sum=lhs;
+    sum += rhs;//采用后面的+=的重载函数
+    return sum;
+}
+```
+
+&emsp;&emsp;《C++ Primer》 497页：类如果同时定义了算术运算符和复合赋值运算符，通常情况下应用复合赋值来实现算术运算符。
+
+
+
+&emsp;&emsp;关系运算符也大同小异，唯一不同是返回值是bool值。并且要遵循如下设计准则：
+
+* 相等运算符`==`应具有传递性
+* 定义了`==`，则相应的要定义`!=`；同理，定义了`<`，相应的要定义`>`
+
+
+
+## 递增和递减运算符（++、--）
+
+&emsp;&emsp;虽然没必要，但还是建议将递增和递减运算符定义为成员函数。因为它们只改变所操作的对象。
+
+### 前置版本（++a）
+
+&emsp;&emsp;应该返回**递增或递减后的对象的引用**，这样才能作为左值使用。
+
+```c++
+class A{
+private:
+    int data;
+public:
+    A& operator++();
+}
+
+A& A::operator++(){
+    ++data;
+    return *this;//返回递增后的对象的引用
+}
+```
+
+
+
+### 后置版本（a++）
+
+&emsp;&emsp;应该返回递增或递减**前**的对象的**原值**，而非引用。
+
+```c++
+class A{
+private:
+    int data;
+public:
+    A& operator++(int);
+}
+
+A& A::operator++(int){
+    A temp=*this;
+    ++*this;//用之前定义的前置来实现
+    return temp;//返回递增后的对象的引用
+}
+```
+
+&emsp;&emsp;需要注意的是，我们的参数中有一个`int`，但我们并不会用到它，所以无需为其命名，编译器会为它提供一个值为0的实参。也就等价于：
+
+```c++
+A& A::operator++(int i=0){};
+```
+
+
+
+## 赋值运算符（=）
+
+&emsp;&emsp;之前本来是要讲拷贝赋值的，不过基础部分还是不要太深入了，其实和复制构造函数是一样的，也就是编译器会为我们自动重载赋值运算符，但那只是浅复制。要实现深复制，则需要手动对赋值运算符进行重载。要求如下：
+
+* 必须是成员函数
+* 返回左侧运算对象的引用（`return *this`）
+
+&emsp;&emsp;例子和深复制那部分差不多，就不给了。
+
+
+
+## 下标运算符（ [] ）
+
+&emsp;&emsp;貌似最近写程序都没用过这个，就大概讲一下要求：
+
+* 必须是成员函数
+* 返回的是对应元素的引用（这样可以作为左值或右值）
+* 最好定义多一个常量版本（函数后面加const），并且返回常量引用
+
+
+
+## 成员访问运算符（*）
+
+（待定）
+
+## 函数调用运算符（ ( ) ）
+
+（待定）
