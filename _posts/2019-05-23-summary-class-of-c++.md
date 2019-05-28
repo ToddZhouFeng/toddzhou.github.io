@@ -266,3 +266,10 @@ int(a)+3;//正确
 
 &emsp;&emsp;实际上，cin有一个向bool转换的显式的类型转换函数，所以我们可以在条件表达式中用cin，并且在其他位置用cin不会出错。
 
+
+
+# 题外话
+
+顺便说一句：NASA有一个*把名字刻在火星漫游者芯片上* 的活动，也就是说，我的名字要上火星咯~
+
+<iframe width="980" height="410" src="https://mars.nasa.gov/layout/embed/send-your-name/mars2020/certificate/?cn=798945412605" frameborder="0"></iframe>

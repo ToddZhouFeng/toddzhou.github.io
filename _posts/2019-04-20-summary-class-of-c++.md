@@ -378,7 +378,7 @@ public:
 
 # 访问控制和封装
 
-&emsp;&emsp;为了限制用户对类的访问权限，可以利用**访问说明符**：`public` 和`private`
+&emsp;&emsp;为了限制用户对类的访问权限，可以利用**访问说明符**：`public`、`protected` 和`private`（`protected`后面再讲）
 
 ```c++
 class Sales_data{
@@ -392,7 +392,7 @@ private://以下可被类的成员函数访问
 };
 ```
 
-&emsp;&emsp;特别的，如果在访问说明符前声明数据成员或成员函数，对于`struct`则默认为`public`，对于`class`则默认为`private`。这是`struct`和`class`的唯一区别。
+&emsp;&emsp;特别的，如果在访问说明符前声明数据成员或成员函数，对于`struct`则默认为`public`，对于`class`则默认为`private`。这是`struct`和`class`唯二的区别（另一个在继承那里）。
 
 
 
