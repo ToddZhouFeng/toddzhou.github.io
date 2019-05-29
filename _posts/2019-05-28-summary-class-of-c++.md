@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 对C++类的整理(3)——继承 
-date:   2019-05-23 22:04:00 +0800
+date:   2019-05-283 20:04:00 +0800
 #大类配置
 categories: document
 #小类配置
