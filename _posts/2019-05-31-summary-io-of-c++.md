@@ -47,15 +47,13 @@ music-id: 36198480
 
 ## IO对象无拷贝或赋值
 
-&emsp;&emsp;**IO对象无拷贝或赋值！**所以我们不能用`=`对流赋值或拷贝，也不能在函数中使用流参数或返回流，只能使用或返回流的引用或指针。
+&emsp;&emsp;**IO对象无拷贝或赋值！**所以我们不能用`=`对流赋值或拷贝，也不能在函数中使用流参数或返回流，只能使用或返回流的引用或指针。这点格外要注意。
 
 
 
 ## 流状态
 
 &emsp;&emsp;由于IO可能发生错误，我们需要一些标志和函数标记或检测流状态。
-
-
 
 ### 标志
 
@@ -75,7 +73,7 @@ music-id: 36198480
 &emsp;&emsp;以下函数用于检查流状态：
 
 ```c++
-iostream s;
+istream &s=cin;
 //检查是否为eofbit，是则返回1，否则返回0
 s.eof();
 
@@ -133,6 +131,78 @@ s.setstate(flags)
 
 
 
+# 格式化输入输出
+
+&emsp;&emsp;标准库定义了一组**操纵符**来控制流的格式状态，也就是修改数值的输出形式或控制补白的数量和位置。一般来讲，操纵符都是“设置”/“复原“成对的。下面的若无说明，无需包含iomanip头文件。
+
+## bool格式
+
+&emsp;&emsp;默认情况下，bool值输出0/1；输出true/false，可用`boolalpha`；复原可用`noboolalpha`。一旦设置了bool格式，会对后面所有的bool值起作用。
+
+```c++
+cout<<true<<' '<<false<<'\n' \\输出0 1
+    <<boolalpha<<true<<' '<<false<<'\n' \\输出true false
+    <<noboolalpha<<true<<' '<<false<<endl; \\输出1 0
+```
+
+## 整型格式
+
+&emsp;&emsp;默认情况下，整型输出使用十进制。用`hex`改为十六进制；`oct`改为八进制；`dec`改回十进制。一旦设置了格式，会对后面所有的整型起作用。
+
+```c++
+cout << 24 << ' '//24
+	<< hex << 24 << ' '//18
+	<< oct << 24 << ' '//30
+	<< dec << 24 << endl;//24
+```
+
+&emsp;&emsp;默认是只输出数字。如果想要十六进制输出0x18，八进制输出030，可以用`showbase`，若要取消，可以用`noshowbase`。一旦设置，对后面所有的整型起作用。
+
+```c++
+cout <<showbase
+	<< 24 << ' '//24
+	<< hex << 24 << ' '//0x18
+	<< oct << 24 << ' '//030
+	<< dec << 24 << endl;//24
+```
+
+&emsp;&emsp;默认情况下，十六进制的0x18是用小写的x，并且用小写的“abcdef”，可以用`uppercase`来设置为大写，`nouppercase`设置为小写。一旦设置，对后面所有的整型起效。
+
+```c++
+cout <<showbase
+	<< hex << 15 << ' '//0xf
+	<<uppercase<<15<<endl;//0XF
+```
+
+## 浮点数格式
+
+&emsp;&emsp;默认精度为6位，超出的位四舍五入。若要设置精度，可以用下面三个函数：
+
+```c++
+cout.precision();//返回旧精度
+cout.precision(5);//设置新精度，返回旧精度
+setprecision(5);//设置新精度，不返回值。要包含头文件iomanip
+```
+
+```c++
+float pi = 3.1415926;
+cout << setprecision(5) << ' ' << pi << '\n'//3.1416
+	<< setprecision(4) << ' ' << pi << '\n'//3.142
+	<< setprecision(3) << ' ' << pi << endl;//3.14
+```
+
+```c++
+float pi = 3.1415926;
+cout << cout.precision(5) << ' ' << pi << '\n'//4 3.1416
+	<< cout.precision(4) << ' ' << pi << '\n'//3 3.1416
+	<< cout.precision(3) << ' ' << pi << endl;//6 3.1416
+```
+
+&emsp;&emsp;注意，在最后一个例子中，cout.precision(int)是从后往前执行，并且最终的输出结果取决于前面的。
+
+
+
+
 
 # 标准流(iostream)
 
@@ -144,3 +214,51 @@ s.setstate(flags)
 * `clog`：ostream对象，标准错误输出流，连向打印机，将错误信息输出到缓冲区，等到缓冲区刷新再输出。不能重定向到文件
 
 &emsp;&emsp;除了上面几个对象外，我们不能定义自己的`istream`或`ostream`或`iostream`，因为它们并没有构造函数。
+
+
+
+## 输入流操作
+
+* 读取字符
+
+  ```c++
+  cin.get();
+  cin.getline();
+  ```
+
+* 流指针
+
+  ```c++
+  cin.seekg();
+  cin.tellg();
+  ```
+
+
+
+
+## 输出流操作
+
+* 插入字
+
+  ```c++
+  cout.put();
+  cout.write();
+  ```
+
+* 刷新流
+
+  ```c++
+  cout.flush();
+  ```
+
+* 流指针
+
+  ```c++
+  cout.seekp();
+  cout.tellp();
+  ```
+
+
+# 更多拓展知识
+
+* [C++基本的输入输出](https://www.runoob.com/cplusplus/cpp-basic-input-output.html)
