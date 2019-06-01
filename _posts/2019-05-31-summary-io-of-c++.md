@@ -133,7 +133,7 @@ s.setstate(flags)
 
 # 格式化输入输出
 
-&emsp;&emsp;标准库定义了一组**操纵符**来控制流的格式状态，也就是修改数值的输出形式或控制补白的数量和位置。一般来讲，操纵符都是“设置”/“复原“成对的。下面的若无说明，无需包含iomanip头文件。
+&emsp;&emsp;标准库定义了一组**操纵符**来控制流的格式状态，也就是修改数值的输出形式或控制补白的数量和位置。一般来讲，操纵符都是“设置”/“复原“成对的。下面的若无说明，无需包含iomanip头文件，凡是以set开头的都在iomanip中。
 
 ## bool格式
 
@@ -144,6 +144,8 @@ cout<<true<<' '<<false<<'\n' \\输出0 1
     <<boolalpha<<true<<' '<<false<<'\n' \\输出true false
     <<noboolalpha<<true<<' '<<false<<endl; \\输出1 0
 ```
+
+
 
 ## 整型格式
 
@@ -174,6 +176,8 @@ cout <<showbase
 	<<uppercase<<15<<endl;//0XF
 ```
 
+&emsp;&emsp;默认情况下，正数前面无正号，若要输出正号，可用`showpos`，取消可以用`noshowpos`。一旦设置，对后面所有的正整数和正浮点数都有效。
+
 ## 浮点数格式
 
 &emsp;&emsp;默认精度为6位，超出的位四舍五入。若要设置精度，可以用下面三个函数：
@@ -202,6 +206,82 @@ cout << cout.precision(5) << ' ' << pi << '\n'//4 3.1416
 
 
 
+&emsp;&emsp;浮点数有三种计数法：科学计数法、定点十进制或十六进制计数法。操纵符`scientific`设置科学计数法；`fixed`设置定点十进制；`hexfloat`设置十六进制法。标准库默认会根据数值自动选择计数法，我们也可以通过`defaultfloat`来设置成默认模式。一旦设置，对后面所有的浮点数都有效。
+
+&emsp;&emsp;一旦设置为`scientific`、`fixed`或`hexfloat`后，精度的含义会发生变化：默认模式指的是总位数，设置后指的是小数点后的位数。
+
+```c++
+cout << pi << ' ' //3.14159
+	<< scientific << pi << ' ' //3.141593e+00
+	<< fixed << pi << ' ' //3.141593
+	<< hexfloat << pi << ' ' //0x1.921fb4p+1
+	<< defaultfloat << pi << endl; //3.14159
+```
+
+&emsp;&emsp;科学计数法的e和十六进制默认为小写，要用大写的话可以用`uppercase`，要用小写的话可以用`nouppercase`。
+
+
+
+&emsp;&emsp;默认情况下，若浮点数的小数部分为零，则不显示小数点。可以用`showpoint`和`noshowpoint`在显示与不显示之间转换。若显示，则小数点后面的零取决于精度。
+
+```c++
+cout<<showpoint<<3.0 //3.00000
+	<<noshowpoint<<3.0 //3
+```
+
+
+
+## 输出补白
+
+`setw(int)`：**包含在iomanip中**。指定**下一个**数字或字符串的最小空间（宽度）。如果没填满，则在前面加空格；如果填满或大于，则按正常输出。只对下一个数字或字符串有效。
+
+```c++
+cout << setw(10) << "yoyoyo" << endl;
+//1234yoyoyo//1234是为了看清有几个空格人为标上去的
+```
+
+`left`：左对齐输出。比如在上面的最小空间中，没填满时，数字或字符串默认是在右边；设置左对齐后，是在左边。一旦设置，对后面所有的数字或字符串都有效。右对齐为`right`
+
+```c++
+cout<<setw(10)<<left<<"yoyoyo"<<endl;
+//yoyoyo7890//7890是为了看清有几个空格人为标上去的
+```
+
+`setfill('a')`：**包含在iomanip中**。设置用于补白的字符，默认为空格，只允许用一个字符去替换。一旦设置，对后面所有的都有效。
+
+```c++
+cout<<setfill('a')<<setw(10)<<"yoyoyo"<<endl;
+//aaaayoyoyo
+```
+
+`internal`：控制负数符号的位置，设置之后左对齐符号，右对齐数字，中间补白（前提是setw的宽度要大于负数长度）。一旦设置，对后面所有的负数都有效。并没有找到取消的方法......
+
+```c++
+cout<<internal<<setw(10)<<setfill('a')<<-10<<endl;\
+//-aaaaaaaa10
+```
+
+
+
+## 控制输入格式
+
+&emsp;&emsp;默认输入为忽略空格、制表、换行、换纸、回车符。要让输入不忽略，可用`noskipws`；忽略可用`skipws`
+
+```c++
+char ch;
+while(cin>>ch)cout<<ch;
+//输入a b c d//输出abcd
+```
+
+```c++
+char ch;
+cin>>noskipws;
+while(cin>>ch)cout<<ch;
+//输入a b c d//输出a b c d
+```
+
+
+
 
 
 # 标准流(iostream)
@@ -222,7 +302,7 @@ cout << cout.precision(5) << ' ' << pi << '\n'//4 3.1416
 * 读取字符
 
   ```c++
-  cin.get();
+  cin.get(ch);//读一个字节并放入ch中，返回cin
   cin.getline();
   ```
 
@@ -241,7 +321,7 @@ cout << cout.precision(5) << ' ' << pi << '\n'//4 3.1416
 * 插入字
 
   ```c++
-  cout.put();
+  cout.put(ch);//将ch放入cout，返回cout
   cout.write();
   ```
 
