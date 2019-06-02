@@ -79,7 +79,8 @@ template <typename T1, typename T2>
 &emsp;&emsp;非类型参数表示一个值而非类型：
 
 ```c++
-template <N, M>
+template <int N, int M>
+//不能这样写：template<N, M>
 ```
 
 &emsp;&emsp;非类型参数可以是一个整型，或指向对象或函数类型的指针或引用绑定。绑定到非类型整型参数的实参必须是常量表达式；绑定到指针、引用的非类型参数的实参必须具有静态的生存期。在模板定义内，非类型参数是一个常量值，用在需要常量表达式的地方。比如：
@@ -91,6 +92,13 @@ int compare(const char (&p1)[N], const char(&p2)[M]){
 }
 
 compare("Hello", "World")
+```
+
+&emsp;&emsp;类型模板参数和非类型模板参数可以混用，但必须放在一个template<>里面，因为参数模板列表只能有一个：
+
+```c++
+template<typename T, int N>
+void function(T[N]){}
 ```
 
 

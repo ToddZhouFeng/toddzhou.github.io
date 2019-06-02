@@ -131,6 +131,8 @@ s.setstate(flags)
 
 
 
+
+
 # 格式化输入输出
 
 &emsp;&emsp;标准库定义了一组**操纵符**来控制流的格式状态，也就是修改数值的输出形式或控制补白的数量和位置。一般来讲，操纵符都是“设置”/“复原“成对的。下面的若无说明，无需包含iomanip头文件，凡是以set开头的都在iomanip中。
@@ -177,6 +179,8 @@ cout <<showbase
 ```
 
 &emsp;&emsp;默认情况下，正数前面无正号，若要输出正号，可用`showpos`，取消可以用`noshowpos`。一旦设置，对后面所有的正整数和正浮点数都有效。
+
+
 
 ## 浮点数格式
 
@@ -337,6 +341,108 @@ while(cin>>ch)cout<<ch;
   cout.seekp();
   cout.tellp();
   ```
+
+
+
+# 文件流(fstream)
+
+&emsp;&emsp;头文件`fstream`中定义了三个类：只读文件`ifstream`、只写文件`ofstream`、读写文件`fstream`。它们分别继承自`istream`、`ostream`和`iostream`，因此可以在函数参数中用文件流代替相应的标准流。
+
+## 打开文件
+
+&emsp;&emsp;我们先定义一个文件流对象，然后再将对象与文件关联起来：
+
+```c++
+//方法一
+ifstream infile("input.txt");//文件名可以是c字符串或string
+//方法二
+ifstream infile;
+infile.open("input.txt");
+```
+
+&emsp;&emsp;文件有不同的打开方式，如下：
+
+| 标识常量 | 值     | 意义   |
+| -------- | ------ | ------ |
+| ios::in  | 0x0001 | 读方式 |
+|ios::out|0x0002|写方式|
+|ios::ate|0x0004|打开文件后文件指针定位到文件末尾|
+|ios::app|0x0008|写入内容追加到文件末尾|
+|ios::trunc|0x0010|删除文件已有内容|
+|ios::nocreate|0x0020|如果文件不存在，则打开失败|
+|ios::noreplace|0x0040|如果文件存在，则打开失败|
+|ios::binary|0x0080|以二进制方式打开|
+
+* `ifstream`不能以`ios::out`打开，`ofstream`不能以`ifstream`打开；
+* `ofstream`默认以`ios::out||ios::trunc`打开，即默认会删除原文件。要想保留源文件，可以用`ios::out||iot::app`或`ios::out||ios::in`；
+* `ios::trunc`只能在`ios::out`设定时才能设置；并且`ios::trunc`和`ios::app`不能同时设定；
+* 在`ios::app`模式下，即使没有指定`ios::out`，文件也会以写方式打开；
+* 默认情况下，文件以文本模式打开
+
+&emsp;&emsp;根据上面所说的，我们可以指定打开方式：
+
+```c++
+fstream file("data.txt", ios::in||ios::out||ios::app);
+```
+
+&emsp;&emsp;如果打开失败，`failbit`会被置位，此时，`if(file)`为false。一旦一个文件流与一个文件关联，再调用open会导致文件流failbit被置位，因此，要关闭后才能打开新的文件。
+
+
+
+## 关闭文件
+
+&emsp;&emsp;当一个文件用完后，最好即使关闭，即调用`file.close()`。这样缓冲区的数据会写入文件，并添加文件结束标志，切断文件流与文件的联系。
+
+&emsp;&emsp;尽管文件流在析构时会自动调用`file.close()`（至于什么时候调用析构函数，可看之前的类基础博文），但我们最好手动写上，防止程序在中途崩溃。
+
+
+
+## 读写文件
+
+&emsp;&emsp;读写文件的操作与`cin`、`cout`类似，可以用`>>`、`<<`。
+
+&emsp;&emsp;当然，`file.get()`、`file.getline()`等函数也是可以用的。
+
+&emsp;&emsp;如果移动读指针用`seekg()`，写指针用`seekp()`，这和前面也是一样的。
+
+&emsp;&emsp;唯一有点麻烦的是二进制文件，我们只能通过下面这种方法写入：
+
+```c++
+ofstream outfile("data", ios::binary);
+int data=10;
+file.write( (char*)&data, sizeof(data) );//将&data以及后面总共sizeof(data)的数据写入
+```
+
+&emsp;&emsp;而且读二进制文件也要这样读：
+
+```c++
+ifstream infile("data", ios::binary);
+int data;
+file.write( (char*)&data, sizeof(data) );//将sizeof(data)的数据写入&data以及后面的空间
+```
+
+
+
+
+
+# 串流(strstream/sstream)
+
+&emsp;&emsp;串流有两类，一类是以C类型字符串为流的`strstream`，一类是以string为流的`sstream`。串流用起来与`cin`和`cout`没什么不同（毕竟是由它俩派生的嘛~），不过原理上，串流是将数据以字符串的格式储存，再将字符串格式的数据输出到数据中，因此它很适合当“中间类”。比如要一次读文件的一行：
+
+```c++
+ifstream infile("input.txt");
+string line;
+stringstream ss;
+while(infile){
+    infile.getline(line);
+    ss<<line;
+    ...
+}
+```
+
+
+
+
 
 
 # 更多拓展知识
