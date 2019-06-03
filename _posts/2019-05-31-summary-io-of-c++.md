@@ -653,7 +653,31 @@ cin.putback(ch);//如果上一个读取的字节是ch，就放回去
 
 ### 多字节操作
 
-&emsp;&emsp;多字节操作有点复杂。
+* `cin.get(char sink[], int size, char delim)`
+
+  从cin中读取最多size个字符，如果遇到delim或文件尾则结束（delim不会读取出来，保留在流中），读取的字符存放到sink内。
+
+* `cin.getline(char sink[], int size, char delim)`
+
+  和上面类似，不过会读取并丢弃delim.
+
+* `cin.read(char sink[], int size)`
+
+  读取size个字节放入sink中，返回cin
+
+* `cin.gcount()`
+
+  返回上一个未格式化的操作（不包括gcount）从is读取的字节数。如果是`peek`、`unget`、`putback`，则返回0
+
+* `cout.write(char sink[], int size)`
+
+  将sink中size个字节存入cout中，返回cout
+
+* `cin.ignore(int size, char delim)`
+
+  读取并忽略最多size个字符，包括delim。与其他未格式化的操作不同，ignore有默认参数size=1, delim=eof
+
+
 
 
 
@@ -680,7 +704,7 @@ infile.open("input.txt");
 | ios::in  | 0x0001 | 读方式 |
 |ios::out|0x0002|写方式|
 |ios::ate|0x0004|打开文件后文件指针定位到文件末尾|
-|ios::app|0x0008|写入内容追加到文件末尾|
+|ios::app|0x0008|每次的写入内容都追加到文件末尾|
 |ios::trunc|0x0010|删除文件已有内容|
 |ios::nocreate|0x0020|如果文件不存在，则打开失败|
 |ios::noreplace|0x0040|如果文件存在，则打开失败|
@@ -927,6 +951,4 @@ while(infile){
 <p>参考：</p>
 <p><a href="http://bbs.csdn.net/topics/70007597" rel="nofollow" target="_blank">CSDN：ios::app与ios::ate打开方式有什么不同</a></p>
 <p><a href="http://utensil.iteye.com/blog/372138" rel="nofollow" target="_blank">ofstream与ate的故事</a></p>
-<p><br></p>
-<p><a href="http://utensil.iteye.com/blog/372138" rel="nofollow" target="_blank">网址：http://www.cnblogs.com/zhcncn/archive/2013/01/08/2851656.html<br></a></p>
 </div>
