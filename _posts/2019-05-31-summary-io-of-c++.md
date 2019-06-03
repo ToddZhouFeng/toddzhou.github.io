@@ -206,7 +206,7 @@ cout << cout.precision(5) << ' ' << pi << '\n'//4 3.1416
 	<< cout.precision(3) << ' ' << pi << endl;//6 3.1416
 ```
 
-&emsp;&emsp;注意，在最后一个例子中，cout.precision(int)是从后往前执行，并且最终的输出结果取决于前面的。
+&emsp;&emsp;注意，在最后一个例子中，cout.precision(int)是从后往前执行，并且最终的输出结果取决于前面的。并且float类型的最大精度为6，double最大精度为15。
 
 
 
@@ -237,7 +237,7 @@ cout<<showpoint<<3.0 //3.00000
 
 ## 输出补白
 
-`setw(int)`：**包含在iomanip中**。指定**下一个**数字或字符串的最小空间（宽度）。如果没填满，则在前面加空格；如果填满或大于，则按正常输出。只对下一个数字或字符串有效。
+`setw(int)`：**包含在iomanip中**。指定**下一个**数字或字符串的最小空间（宽度）。如果没填满，则在前面加空格；如果填满或大于，则按正常输出。**只对下一个数字或字符串有效**。
 
 ```c++
 cout << setw(10) << "yoyoyo" << endl;
@@ -258,7 +258,7 @@ cout<<setfill('a')<<setw(10)<<"yoyoyo"<<endl;
 //aaaayoyoyo
 ```
 
-`internal`：控制负数符号的位置，设置之后左对齐符号，右对齐数字，中间补白（前提是setw的宽度要大于负数长度）。一旦设置，对后面所有的负数都有效。并没有找到取消的方法......
+`internal`：控制负数符号的位置，设置之后左对齐符号或基数指示符，右对齐数字，中间补白（前提是setw的宽度要大于负数长度）。一旦设置，对后面所有的负数或非十进制数都有效。并没有找到取消的方法......
 
 ```c++
 cout<<internal<<setw(10)<<setfill('a')<<-10<<endl;\
@@ -286,6 +286,335 @@ while(cin>>ch)cout<<ch;
 
 
 
+# 其他格式化输入输出
+
+&emsp;&emsp;上面大部分使用`<<`和`>>`+控制符来实现，下面介绍两种其他设置格式的方法：
+
+## ios类中的方法
+
+&emsp;&emsp;ios类中可以通过格式控制函数来设置格式。格式控制函数如下：
+
+```c++
+//返回标志字
+ios.flags();
+
+//设置标志字
+ios.flags(Flags);//清空并设置Flags标志位，返回之前的标志位
+ios.setf(Flags);//在原基础上加上Flags标志位，返回之前的标志位
+ios.setf(Flags, Masks);//在基础上加上Flags标志位，清除Masks标志位，返回之前的标志位
+
+//清除标志位
+ios.unsetf(Flags)//清除Flags标志位，返回之前的标志位
+
+//设置宽度
+cout.width(int n);
+//返回宽度
+cout.width();
+
+//设置填充字符
+cout.fill(chat ch);
+//返回填充字符
+cout.fill();
+
+//设置精度
+cout.precision(int n);
+//返回精度
+cout.precision();
+```
+
+&emsp;&emsp;其中，标志字和上面的控制符差不多，不过用的时候要加上`ios::`，下面列出常用的标志字：
+
+<table style="height: 686px; width: 825px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top" width="75">
+<p>位组</p>
+</td>
+<td valign="top" width="76">
+<p>格式标志</p>
+</td>
+<td valign="top" width="217">
+<p>作用</p>
+</td>
+<td valign="top" width="113">
+<p>默认值</p>
+</td>
+<td valign="top" width="71">
+<p>所占bit</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="75">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="76">
+<p>skipws</p>
+</td>
+<td valign="top" width="217">
+<p>使用输入操作符时跳过空白字符</p>
+</td>
+<td valign="top" width="113">
+<p>设置</p>
+</td>
+<td valign="top" width="71">
+<p>1</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="75">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="76">
+<p>unitbuf</p>
+</td>
+<td valign="top" width="217">
+<p>每次操作后刷新缓冲区</p>
+</td>
+<td valign="top" width="113">
+<p>Cerr设置,其他对象不设置</p>
+</td>
+<td valign="top" width="71">
+<p>2</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="75">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="76">
+<p>uppercase</p>
+</td>
+<td valign="top" width="217">
+<p>字母采用大写</p>
+</td>
+<td valign="top" width="113">
+<p>不设置</p>
+</td>
+<td valign="top" width="71">
+<p>3</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="75">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="76">
+<p>showbase</p>
+</td>
+<td valign="top" width="217">
+<p>输出整数时加上进制前缀</p>
+</td>
+<td valign="top" width="113">
+<p>未设置</p>
+</td>
+<td valign="top" width="71">
+<p>4</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="75">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="76">
+<p>showpoint</p>
+</td>
+<td valign="top" width="217">
+<p>按精度输出浮点数（不够补0）</p>
+</td>
+<td valign="top" width="113">
+<p>未设置</p>
+</td>
+<td valign="top" width="71">
+<p>5</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="75">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="76">
+<p>showpos</p>
+</td>
+<td valign="top" width="217">
+<p>输出非负数时加‘+’</p>
+</td>
+<td valign="top" width="113">
+<p>未设置</p>
+</td>
+<td valign="top" width="71">
+<p>6</p>
+</td>
+</tr>
+<tr>
+<td rowspan="3" valign="top" width="75">
+<p>&nbsp;</p>
+<p>adjustfield</p>
+</td>
+<td valign="top" width="76">
+<p>left</p>
+</td>
+<td valign="top" width="217">
+<p>加入指定字符使输出左对齐</p>
+</td>
+<td rowspan="3" valign="top" width="113">
+<p>&nbsp;</p>
+<p>right</p>
+</td>
+<td valign="top" width="71">
+<p>7</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="76">
+<p>right</p>
+</td>
+<td valign="top" width="217">
+<p>加入指定字符使输出右对齐</p>
+</td>
+<td valign="top" width="71">
+<p>8</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="76">
+<p>Internal</p>
+</td>
+<td valign="top" width="217">
+<p>在符号和数值中间插入指定字符</p>
+</td>
+<td valign="top" width="71">
+<p>9</p>
+</td>
+</tr>
+<tr>
+<td rowspan="3" valign="top" width="75">
+<p>&nbsp;</p>
+<p>basefield</p>
+</td>
+<td valign="top" width="76">
+<p>dec</p>
+</td>
+<td valign="top" width="217">
+<p>10进制输入/输出</p>
+</td>
+<td rowspan="3" valign="top" width="113">
+<p>&nbsp;</p>
+<p>dec</p>
+</td>
+<td valign="top" width="71">
+<p>10</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="76">
+<p>oct</p>
+</td>
+<td valign="top" width="217">
+<p>8进制输入/输出</p>
+</td>
+<td valign="top" width="71">
+<p>11</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="76">
+<p>hex</p>
+</td>
+<td valign="top" width="217">
+<p>16进制输入/输出</p>
+</td>
+<td valign="top" width="71">
+<p>12</p>
+</td>
+</tr>
+<tr>
+<td rowspan="2" valign="top" width="75">
+<p>floatfield</p>
+</td>
+<td valign="top" width="76">
+<p>scientific</p>
+</td>
+<td valign="top" width="217">
+<p>浮点数按科学计数法输出</p>
+</td>
+<td rowspan="2" valign="top" width="113">
+<p>无,由浮点数量级决定</p>
+</td>
+<td valign="top" width="71">
+<p>13</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="76">
+<p>fixed</p>
+</td>
+<td valign="top" width="217">
+<p>浮点数按小数输出</p>
+</td>
+<td valign="top" width="71">
+<p>14</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="75">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="76">
+<p>boolalpha</p>
+</td>
+<td valign="top" width="217">
+<p>以字母格式输入和输出布尔值</p>
+</td>
+<td valign="top" width="113">
+<p>未设置</p>
+</td>
+<td valign="top" width="71">
+<p>15</p>
+</td>
+</tr>
+</tbody>
+</table>
+
+&emsp;&emsp;下面几点额外需要注意：
+
+* 用的时候前面要加上`ios::`
+* 在使用`setf`设置属于某一位组的标记位时,需要提供位组作为第二个参数来将其他互斥的标记位复位,否则可能会出现设置无效的现象。并且建议用公有静态符号`basefield`、`adjustfield`和`floatfield`
+* cout和cin初始时只有`ios::skipws`和`ios::dec`，即0010 0000 0001
+
+
+
+## iomanip库中的方法
+
+&emsp;&emsp;iomanip中有一些控制符可以用于设置标志字：
+
+```c++
+//设定标志字
+setiosflags(ios::Flags);
+
+//清除标志字
+resetiosflags(ios::Flags);
+
+//设置基数
+setbase(int base)//base可以取8 10 16
+
+//设置填充符
+setfill(char ch);
+
+//设置浮点数精度
+setprecision(int n);
+
+//设置输出宽度
+setw(int n);
+```
+
+&emsp;&emsp;这些并不是函数，其用法和操纵符一样：
+
+```c++
+cout<<setiosflags(ios::left);
+```
+
+
+
 
 
 # 标准流(iostream)
@@ -301,46 +630,30 @@ while(cin>>ch)cout<<ch;
 
 
 
-## 输入流操作
+## 未格式化的操作
 
-* 读取字符
+&emsp;&emsp;之前，我们使用的`<<`和`>>`会根据要 读取或写入的数据类型 来转换成对应格式，并且默认忽略空白符，这种叫格式化的IO操作。如果只是要单纯地提取字节，并且**不忽略空白符**，可以用底层操作，也就是未格式化的操作。
 
-  ```c++
-  cin.get(ch);//读一个字节并放入ch中，返回cin
-  cin.getline();
-  ```
+### 单字节操作
 
-* 流指针
+```c++
+char ch;
+cin.get();//将下一个字节作为int返回
+cin.get(ch);//输入一个字节到ch，返回cin或0（读取到文件结束符时）
+cout.put(ch);//输出一个ch字节
+```
 
-  ```c++
-  cin.seekg();
-  cin.tellg();
-  ```
+```c++
+cin.peek();//偷窥~以int类型返回下一个字节，但不从流中删去
+cin.unget();//将上一个读取的字节放回去
+cin.putback(ch);//如果上一个读取的字节是ch，就放回去
+```
 
+&emsp;&emsp;注意，`cin.get()`和`cin.peek()`是返回一个`int`而不是`char`，这样我们就可以返回文件尾标记（`EOF`）。而`char`中每一个都表示一个真实的字符，不能表示文件尾。
 
+### 多字节操作
 
-
-## 输出流操作
-
-* 插入字
-
-  ```c++
-  cout.put(ch);//将ch放入cout，返回cout
-  cout.write();
-  ```
-
-* 刷新流
-
-  ```c++
-  cout.flush();
-  ```
-
-* 流指针
-
-  ```c++
-  cout.seekp();
-  cout.tellp();
-  ```
+&emsp;&emsp;多字节操作有点复杂。
 
 
 
@@ -448,3 +761,172 @@ while(infile){
 # 更多拓展知识
 
 * [C++基本的输入输出](https://www.runoob.com/cplusplus/cpp-basic-input-output.html)
+* [C++: ios标志位](https://www.cnblogs.com/reasno/p/4875656.html)
+
+<div id="cnblogs_post_body">
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div class="table-box"><table border="1" cellpadding="0" cellspacing="0" width="747"><tbody><tr><td rowspan="2" width="125">
+<p align="center"><strong>文件流</strong></p>
+</td>
+<td colspan="2" width="257">
+<p align="center"><strong>ios::app</strong></p>
+</td>
+<td colspan="2" width="257">
+<p align="center"><strong>ios::ate</strong></p>
+</td>
+</tr><tr><td width="142">
+<p align="center"><strong>打开方式</strong></p>
+</td>
+<td width="115">
+<p align="center"><strong>结果</strong></p>
+</td>
+<td width="149">
+<p align="center"><strong>打开方式</strong></p>
+</td>
+<td width="108">
+<p align="center"><strong>结果</strong></p>
+</td>
+</tr><tr><td rowspan="2" width="125" style="text-align:center;">
+<p><strong>ofstream</strong></p>
+<p>(默认是ios::in | ios::trunc)</p>
+</td>
+<td width="142">
+<p>ios::app或ios::app|ios::out</p>
+</td>
+<td width="115">
+<p>如果没有文件，生成空文件；</p>
+<p>如果有文件，在文件尾追加</p>
+</td>
+<td width="149">
+<p>ios::ate或ios::ate|ios::out</p>
+</td>
+<td width="108">
+<p>如果没有文件，生成空文件；</p>
+<p>如果有文件，清空该文件</p>
+</td>
+</tr><tr><td width="142">
+<p>ios::app|ios::in</p>
+</td>
+<td width="115">
+<p>不管有没有文件，都是失败</p>
+</td>
+<td width="149">
+<p>ios::ate|ios::in</p>
+</td>
+<td width="108">
+<p>如果没有文件，打开失败；</p>
+<p>如果有文件，定位到文件尾，可以写文件，但是不能读文件</p>
+</td>
+</tr><tr><td rowspan="2" width="125" style="text-align:center;">
+<p><strong>Ifstream</strong></p>
+<p>(默认是ios::in)</p>
+</td>
+<td width="142">
+<p>ios::app或ios::app|ios::out</p>
+</td>
+<td width="115">
+<p>不管有没有文件，都是失败</p>
+</td>
+<td width="149">
+<p>ios::ate或ios::ate|ios::out</p>
+</td>
+<td width="108">
+<p>如果没有文件，打开失败；<br>
+如果有文件，定位到文件尾，但是不能写文件</p>
+</td>
+</tr><tr><td width="142">
+<p>ios::app|ios::in</p>
+</td>
+<td width="115">
+<p>?</p>
+</td>
+<td width="149">
+<p>ios::ate|ios::in</p>
+</td>
+<td width="108">
+<p>?</p>
+</td>
+</tr><tr><td rowspan="3" width="125" style="text-align:center;">
+<p><strong>fstream</strong></p>
+<p>(默认是ios::in | ios::out)</p>
+</td>
+<td width="142">
+<p>ios::app|ios::out</p>
+</td>
+<td width="115">
+<p>如果没有文件，创建文件；</p>
+<p>如果有文件，在文件尾追加</p>
+</td>
+<td width="149">
+<p>ios::ate|ios::out</p>
+</td>
+<td width="108">
+<p>如果没有文件，创建文件；</p>
+<p>如果有，清空文件</p>
+</td>
+</tr><tr><td width="142">
+<p>ios::app|ios::in</p>
+</td>
+<td width="115">
+<p>如果没有文件，失败</p>
+</td>
+<td width="149">
+<p>ios::ate|ios::in</p>
+</td>
+<td width="108">
+<p>如果没有文件，失败</p>
+</td>
+</tr><tr><td width="142">
+<p>N/A</p>
+</td>
+<td width="115">
+<p>N/A</p>
+</td>
+<td width="149">
+<p>ios::ate|ios::out|ios::in</p>
+</td>
+<td width="108">
+<p>如果没有文件，打开失败，</p>
+<p>如果有文件，定位到文件尾</p>
+</td>
+</tr><tr><td width="125" style="text-align:center;">
+<p><strong>总结</strong></p>
+</td>
+<td colspan="2" width="257">
+<p>ios::app不能和ios::in相配合,</p>
+<p>但可以和ios::out配合，打开输入流</p>
+</td>
+<td colspan="2" width="257">
+<p>ios::ate可以和ios::in配合，此时定位到文件尾；</p>
+<p>如果没有ios::in相配合而只是同ios::out配合，那么将清空原文件；</p>
+</td>
+</tr><tr><td width="125" style="text-align:center;">
+<p><strong>区别</strong></p>
+</td>
+<td colspan="2" width="257">
+<p>app会在每次写操作之前都把写指针置于文件末尾，</p>
+</td>
+<td colspan="2" width="257">
+<p>而ate模式则只在打开时才将写指针置于文件末尾。在文件操作过程中，可以通过seekp等操作移动指针位置。</p>
+</td>
+</tr><tr><td width="125" style="text-align:center;">
+<p><strong>例子：</strong></p>
+<p>多个线程或者进程对一个文件写的时候,假如文件原来的内容是abc</p>
+<p>&nbsp;</p>
+</td>
+<td colspan="2" width="257">
+<p>以ios::app：</p>
+<p>第一个线程(进程)往里面写了个d,第二个线程(进程)写了个e的话，结果是abcde</p>
+</td>
+<td colspan="2" width="257">
+<p>以ios:ate：</p>
+<p>后面写的会覆盖前面一个写的，第一个线程(进程)往里面写了个d,第二个线程(进程)写了个e的话，结果为abce</p>
+</td>
+</tr></tbody></table></div><p>&nbsp;</p>
+<p>参考：</p>
+<p><a href="http://bbs.csdn.net/topics/70007597" rel="nofollow" target="_blank">CSDN：ios::app与ios::ate打开方式有什么不同</a></p>
+<p><a href="http://utensil.iteye.com/blog/372138" rel="nofollow" target="_blank">ofstream与ate的故事</a></p>
+<p><br></p>
+<p><a href="http://utensil.iteye.com/blog/372138" rel="nofollow" target="_blank">网址：http://www.cnblogs.com/zhcncn/archive/2013/01/08/2851656.html<br></a></p>
+</div>

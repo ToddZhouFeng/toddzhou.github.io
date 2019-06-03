@@ -149,6 +149,36 @@ private:
 
 &emsp;&emsp;我们之所以能将基类的指针或引用绑定在派生类上，是因为派生类中包含一个基类部分。如果我们将派生类的指针或引用绑定在基类上，则指针或引用可能会使用基类中不存在的成员，因此不允许**将派生类的指针或引用绑定在基类上**。
 
+```c++
+class A {
+public:
+	int data;
+	A(int i=1):data(i){}
+};
+
+class B :public A{
+public:
+	int data;
+	B(int i=-1):data(i){}
+};
+
+int main() {
+	B *p;
+	A a;
+	p = (B*)&a;//强制类型转换
+    std::cout<<p->data<<endl;//错误！
+    cout<<((A*)p)->data<<endl;//1
+    
+    A *p;
+    B b;
+    p=&b;
+    std::cout<<p->data<<endl;//1
+    std::cout<<((B*)p)->data<<endl;//-1
+}
+```
+
+
+
 &emsp;&emsp;在此引入**静态类型**与**动态类型**的关系：静态类型是声明时所指的类型，而动态类型是内存中所指的对象的类型。对于指针而言，指针的类型为静态类型，指针所指对象的类型为动态类型。
 
 
