@@ -952,3 +952,9 @@ while(infile){
 <p><a href="http://bbs.csdn.net/topics/70007597" rel="nofollow" target="_blank">CSDN：ios::app与ios::ate打开方式有什么不同</a></p>
 <p><a href="http://utensil.iteye.com/blog/372138" rel="nofollow" target="_blank">ofstream与ate的故事</a></p>
 </div>
+
+
+
+吐槽：
+
+2019/6/4 C++考试完全没考到这一部分的知识，有点失望（我干嘛要复习一天这个啊！）

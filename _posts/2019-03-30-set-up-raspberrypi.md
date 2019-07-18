@@ -284,7 +284,7 @@ cd tensorflow/
 wget https://raw.githubusercontent.com/tensorflow/models/tutorials/image/imagenet/classify_image.py
 ~~~
 
-&emsp;&emsp;然后你就会在/home/pi/tensorflow文件夹里看到一个classify_image.py，运行该程序，它会自动下载图像识别库（85M）。
+&emsp;&emsp;然后你就会在/home/pi/tensorflow文件夹里看到一个classify_image.py，运行该程序，它会自动下载图像识别库（85M）（只有第一次会下载，以后就不用了）。
 
 &emsp;&emsp;等到它下载完成后，通过下面命令进行图像识别：
 
@@ -306,5 +306,5 @@ black-footed fettet, ferret, Mustela nigripes (score = 0.00274)
 skunk, polecat, wood pussy (score = 0.00266)
 ~~~
 
-&emsp;&emsp;貌似只能识别动物和物品。
+&emsp;&emsp;貌似只能识别动物和物品（试了一下那种图片，识别不了）。
 
