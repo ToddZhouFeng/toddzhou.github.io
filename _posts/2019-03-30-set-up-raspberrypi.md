@@ -21,7 +21,7 @@ music-id: 465675773
 
 ## 第一次开机
 
-&emsp;&emsp;我的树莓派是3B/3B+，系统为`2018-11-13-raspbian-stretch.img`，就是带桌面但没那么多软件那个。烧录系统只需要10分钟。
+&emsp;&emsp;我的树莓派是3B/3B+，系统为`2018-11-13-raspbian-stretch.img`，就是带桌面但没那么多软件那个。烧录系统只需要10分钟。（最新的系统是`buster`，依然兼容下面的内容）
 
 &emsp;&emsp;第一次开机时间有点久。进入桌面后，先设置Country(China)，Language(Chinese)，Timezone(Shanghai)，勾选Use US keyboard。接着输入‘pi’用户新的密码。然后连接WiFi。不要更新软件，更新的话时间有点久，而且容易出错，跳过。
 
@@ -32,6 +32,8 @@ music-id: 465675773
 
 
 ## 换源&更新
+
+> 最近地Raspbian中好像会自动切换源
 
 &emsp;&emsp;众所周知，树莓派官方软件源在中国很慢，所以要换源。编辑软件源list文件：
 
@@ -107,11 +109,11 @@ http://pypi.mirrors.ustc.edu.cn/simple/
 &emsp;&emsp;在前面加`sudo apt-get install`来安装下面的软件。
 
 ~~~shell
-ttf-wqy-zenhei #文泉驿的中文字体
+ttf-wqy-zenhei #文泉驿的中文字体#Jussie才需安装
 scim-pinyin #中文输入法，重启生效
 vim #命令行的代码编辑器
 cmake #跨平台的自动化建构系统
-nestopia #玩NES游戏
+nestopia #玩NES游戏#不玩就不安装
 smplayer #媒体播放器，VLC太容易卡死了
 ~~~
 
@@ -129,7 +131,7 @@ smplayer #媒体播放器，VLC太容易卡死了
 
 ## 必备Python库
 
-&emsp;&emsp;在前面加`sudo pip install`来安装下面的库。
+&emsp;&emsp;在前面加`sudo pip3 install`来安装下面的库。
 
 ~~~shell
 numpy
@@ -158,13 +160,35 @@ audio_pwm_mode = 2
 
 # 深度学习
 
+
+
+## Jupyter Notebook
+
+&emsp;&emsp;我还不是很会用，不过网上很多教程都用Jupyter来写，不安装看不了。首先执行下面这个命令：
+
+~~~bash
+sudo pip3 install Jupyter Notebook
+~~~
+
+&emsp;&emsp;如果出现安装不成功的情况，可以逐个安装依赖的库：
+
+~~~
+
+~~~
+
+
+
+
+
+
+
 ## Opencv 3.4.0
 
 > 参考博客[【树莓派】树莓派+OpenCV3.4 + python3.5 成功以及注意细节](https://www.jianshu.com/p/3180a253fe3c)，安装后占4.8GB
 
 &emsp;&emsp;安装numpy：
 
-~~~shell
+~~~bash
 sudo pip3 install numpy
 ~~~
 
@@ -306,5 +330,5 @@ black-footed fettet, ferret, Mustela nigripes (score = 0.00274)
 skunk, polecat, wood pussy (score = 0.00266)
 ~~~
 
-&emsp;&emsp;貌似只能识别动物和物品（试了一下那种图片，识别不了）。
+&emsp;&emsp;貌似只能识别动物和物品（试了一下黄色图片，识别不了）。
 
