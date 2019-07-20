@@ -33,7 +33,7 @@ music-id: 465675773
 
 ## 换源&更新
 
-> 最近地Raspbian中好像会自动切换源
+### Stretch
 
 &emsp;&emsp;众所周知，树莓派官方软件源在中国很慢，所以要换源。编辑软件源list文件：
 
@@ -77,6 +77,25 @@ sudo apt-get update && sudo apt-get upgrade -y
 ~~~
 
 &emsp;&emsp;等待漫长的软件更新吧！你可以去我博客看看其他文章先，等更新完成后再继续下面步骤。
+
+
+
+### Buster
+
+&emsp;&emsp;Raspbian于2019/06/12升级到了Buster，基于目前最新的Debian. 换源方法是一样的，只不过源改为：
+
+~~~bash
+#/etc/apt/sources.list
+#中科大
+deb http://mirrors.ustc.deu.cn/raspbian/raspbian/ buster main contrib non-free rpi
+deb-src http://mirrors.ustc.deu.cn/raspbian/raspbian/ buster main contrib non-free rpi
+~~~
+
+~~~bash
+#/etc/apt/sources.list.d/raspi.list
+#中科大
+deb http://mirrors.ustc.edu.cn/raspbian/raspbian/ buster main
+~~~
 
 
 

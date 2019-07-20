@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 相关博客
+title: 博客推荐
 permalink: /reference/
 ---
 
@@ -29,3 +29,10 @@ Axis 2.0的入门
 =====================
 视音频编解码技术学习方法
 [http://blog.csdn.net/leixiaohua1020/article/details/18893769](http://blog.csdn.net/leixiaohua1020/article/details/18893769)
+
+
+
+# 比较好的博客
+
+[Liam Huang https://liam.page](https://liam.page)
+
