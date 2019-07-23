@@ -21,7 +21,7 @@ music-id: 465675773
 
 ## 第一次开机
 
-&emsp;&emsp;我的树莓派是3B/3B+，系统为`2018-11-13-raspbian-stretch.img`，就是带桌面但没那么多软件那个。烧录系统只需要10分钟。（最新的系统是`buster`，依然兼容下面的内容）
+&emsp;&emsp;我的树莓派是3B/3B+，系统为`2018-11-13-raspbian-stretch.img`，就是带桌面但没那么多软件那个。烧录系统只需要10分钟。（最新的系统是`buster`，有些内容不兼容）
 
 &emsp;&emsp;第一次开机时间有点久。进入桌面后，先设置Country(China)，Language(Chinese)，Timezone(Shanghai)，勾选Use US keyboard。接着输入‘pi’用户新的密码。然后连接WiFi。不要更新软件，更新的话时间有点久，而且容易出错，跳过。
 
@@ -45,16 +45,16 @@ sudo nano /etc/apt/sources.list
 
 ~~~shell
 #清华大学
-deb http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ stretch main contrib non-free
-deb-src http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ stretch main contrib non-free
+deb http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ stretch main contrib non-free rpi
+deb-src http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ stretch main contrib non-free rpi
 
 #中国科技大学
-deb http://mirrors.ustc.edu.cn/raspbian/raspbian/ stretch main contrib non-free
-deb-src http://mirrors.ustc.edu.cn/raspbian/raspbian/ stretch main contrib non-free
+deb http://mirrors.ustc.edu.cn/raspbian/raspbian/ stretch main contrib non-free rpi
+deb-src http://mirrors.ustc.edu.cn/raspbian/raspbian/ stretch main contrib non-free rpi
 
 #阿里云
-deb http://mirrors.aliyun.com/raspbian/raspbian/ stretch main contrib non-free
-deb-src http://mirrors.aliyun.com/raspbian/raspbian/ stretch main contrib non-free
+deb http://mirrors.aliyun.com/raspbian/raspbian/ stretch main contrib non-free rpi
+deb-src http://mirrors.aliyun.com/raspbian/raspbian/ stretch main contrib non-free rpi
 ~~~
 
 &emsp;&emsp;修改系统更新源：
@@ -76,7 +76,7 @@ deb http://mirrors.ustc.edu.cn/archive.raspberrypi.org/debian/ stretch main ui
 sudo apt-get update && sudo apt-get upgrade -y
 ~~~
 
-&emsp;&emsp;等待漫长的软件更新吧！你可以去我博客看看其他文章先，等更新完成后再继续下面步骤。
+&emsp;&emsp;等待漫长的软件更新吧！（至少要半个小时）你可以去我博客看看其他文章先，等更新完成后再继续下面步骤。
 
 
 
@@ -94,8 +94,10 @@ deb-src http://mirrors.ustc.deu.cn/raspbian/raspbian/ buster main contrib non-fr
 ~~~bash
 #/etc/apt/sources.list.d/raspi.list
 #中科大
-deb http://mirrors.ustc.edu.cn/raspbian/raspbian/ buster main
+deb http://mirrors.ustc.edu.cn/raspbian/raspbian/ buster main ui
 ~~~
+
+&emsp;&emsp;实际上，就只是把 Stretch源 中的 `stretch` 换成了 `buster`
 
 
 
@@ -128,7 +130,7 @@ http://pypi.mirrors.ustc.edu.cn/simple/
 &emsp;&emsp;在前面加`sudo apt-get install`来安装下面的软件。
 
 ~~~shell
-ttf-wqy-zenhei #文泉驿的中文字体#Jussie才需安装
+ttf-wqy-microhei #文泉驿的中文字体#Jussie和lite才需安装
 scim-pinyin #中文输入法，重启生效
 vim #命令行的代码编辑器
 cmake #跨平台的自动化建构系统
@@ -148,18 +150,29 @@ smplayer #媒体播放器，VLC太容易卡死了
    make && make install
    ~~~
 
+
+
 ## 必备Python库
 
 &emsp;&emsp;在前面加`sudo pip3 install`来安装下面的库。
 
 ~~~shell
-numpy
-matplotlib
+numpy #数学计算 #如果出错，用sudo apt-get install python-numpy安装
+matplotlib #可视化
+nltk #自然语言处理
+jieba #中文语言处理
+scipy #科学计算
+pandas #数据分析#需要 cython 库#如果出错，用sudo apt-get install python pandas安装
+statsmodels #统计模型
+scikit-learn #机器学习
+scrapy #爬虫
 ~~~
 
 
 
 ## 杂七杂八
+
+### 音质提升
 
 &emsp;&emsp;树莓派3.5mm输出口有底噪，可在`/boot/config.txt`文末加入一行：
 
@@ -171,7 +184,12 @@ audio_pwm_mode = 2
 
 
 
----
+### 玩具
+
+```shell
+cmatrix #黑客屏保
+figlet #ASCII字符画
+```
 
 
 
@@ -183,27 +201,77 @@ audio_pwm_mode = 2
 
 ## Jupyter Notebook
 
-&emsp;&emsp;我还不是很会用，不过网上很多教程都用Jupyter来写，不安装看不了。首先执行下面这个命令：
+&emsp;&emsp;先升级 pip ，否则会出现 unsupported operand types ...，逐个输入下面的命令：
+
+```shell
+wget https://bootstrap.pypa.io/get-pip.py
+python get-pip.py
+python3 get-pip.py
+```
+
+&emsp;&emsp;然后执行下面这个命令：
 
 ~~~bash
-sudo pip3 install Jupyter Notebook
+sudo pip3 install jupyter
 ~~~
 
-&emsp;&emsp;如果出现安装不成功的情况，可以逐个安装依赖的库：
+&emsp;&emsp;如果出现安装不成功的情况，可以逐个安装依赖的库（建议多试几次上面，实在不行再逐个安装）：
 
+~~~shell
+sudo pip3 install ipython-genutils decorator traitlets tornado pyzmq backcall pygment ptyprocess pexpect pickleshare parso jedi wcwidth prompt-toolkit ipython ipykernel jinja2 attrs pyrsistent jsonschema nbformat entrypoints testpath webencodinga bleach defusedxml pandocfilters mistune nbconvert Send2Trassh terminado notebook ipywidgets qtconsole
 ~~~
 
-~~~
+&emsp;&emsp;安装好后，输入下面命令生成配置文件：
 
+```shell
+jupyter notebook --generate-config
+```
 
+&emsp;&emsp;修改配置文件：
 
+```shell
+sudo nano ~/.jupyter/jupyter_notebook_config.py
+```
 
+&emsp;&emsp;修改内容如下：
+
+```shell
+#c.NotebookApp.ip = 'localhost'
+改为
+c.NotebookApp.ip = '*'
+```
+
+```shell
+#c.NotebookApp.open_browser = True
+改为
+c.NotebookApp.open_browser = False
+```
+
+```shell
+#c.NotebookApp.port = 8888
+改为
+c.NotebookApp.port = 8888
+```
+
+```shell
+#c.NotebookApp.notebook_dir = ''
+改为
+c.NotebookApp.notebook_dir = '/home/pi'
+```
+
+&emsp;&emsp;配置完成后修改密码：
+
+```shell
+jupyter notebook password
+```
+
+&emsp;&emsp;然后就可以使用Jupyter Notebook了，方法是在树莓派上输入`jupyter notebook`，然后在电脑上的浏览器中打开`树莓派的ip地址:8888`
 
 
 
 ## Opencv 3.4.0
 
-> 参考博客[【树莓派】树莓派+OpenCV3.4 + python3.5 成功以及注意细节](https://www.jianshu.com/p/3180a253fe3c)，安装后占4.8GB
+> 参考博客[【树莓派】树莓派+OpenCV3.4 + python3.5 成功以及注意细节](https://www.jianshu.com/p/3180a253fe3c)，安装后占4.8GB，如果空间不足就别装
 
 &emsp;&emsp;安装numpy：
 
@@ -281,17 +349,17 @@ sudo make && sudo make install
 
 
 
-## Tensorflow 1.13.1
+## Tensorflow 
 
 > 参考博客[从零开始：在树莓派上构建tensorflow——详细至极](https://blog.csdn.net/qq_38960810/article/details/78640171)，他装的是1.1.0，我装的是1.13.1。安装后占200多M
 
 &emsp;&emsp;先下载这些库，其实你不安装也行，待会安装tensorflow时它会自动安装，但那时容易出错。
 
 ~~~shell
-sudo pip3 install grpcio protobuf numpy tensorboard gast termcolor astor keras absl futures enum markdown h5py mock pbr
+sudo pip3 install grpcio protobuf numpy tensorboard gast termcolor astor keras absl-py futures enum markdown h5py mock pbr
 ~~~
 
-&emsp;&emsp;如果那个h5py装不了，可以去浏览器下载：[https://piwheels.org/simple/h5py/h5py-2.9.0-cp35-cp35m-linux_armv7l.whl](https://piwheels.org/simple/h5py/h5py-2.9.0-cp35-cp35m-linux_armv7l.whl)（这个链接就是pip3 install之后出现的连接），然后执行：
+&emsp;&emsp;如果某个库，比如 h5py 装不了，可以去浏览器下载：[https://piwheels.org/simple/h5py/h5py-2.9.0-cp35-cp35m-linux_armv7l.whl](https://piwheels.org/simple/h5py/h5py-2.9.0-cp35-cp35m-linux_armv7l.whl)（这个链接就是 pip3 install 之后出现的链接），然后执行：
 
 ~~~shell
 cd /home/pi/Downloads/ #去到下载目录
@@ -308,14 +376,14 @@ sudo pip3 install h5py-2.9.0-cp35-cp35m-linux_armv7l.whl
 sudo pip3 install tensorflow
 ~~~
 
-&emsp;&emsp;如果你觉得上面的速度太慢了，可以去浏览器下载：[https://piwheels.org/simple/tensorflow/tensorflow-1.13.1-cp35-none-linux_armv7l.whl](https://piwheels.org/simple/tensorflow/tensorflow-1.13.1-cp35-none-linux_armv7l.whl)，然后执行：
+&emsp;&emsp;如果你觉得上面的速度太慢了，可以去浏览器下载（或用wget）：[https://piwheels.org/simple/tensorflow/tensorflow-1.14.0-cp35-none-linux_armv7l.whl](https://piwheels.org/simple/tensorflow/tensorflow-1.14.0-cp35-none-linux_armv7l.whl)，然后执行：
 
 ~~~shell
-cd /home/pi/Downloads #去到下载目录
-sudo pip3 install tensorflow-1.13.1-cp35-none-linux_armv7l.whl
+cd /home/pi/Downloads #去到下载目录，如果用wget则不用这行
+sudo pip3 install tensorflow-1.14.0-cp35-none-linux_armv7l.whl
 ~~~
 
-&emsp;&emsp;然后就等等等等30~60分钟吧。
+&emsp;&emsp;然后就等等等等15~30分钟吧。
 
 
 
