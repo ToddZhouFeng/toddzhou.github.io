@@ -121,6 +121,8 @@ jupyter notebook password
 
 &emsp;&emsp;Jupyter 默认启动后自动打开浏览器，并只能在本机上的8888端口访问。如果要修改设置，请看[Jupyter Configuration](https://jupyter.readthedocs.io/en/latest/projects/config.html#command-line-options-for-configuration)，或自行查必应。
 
+&emsp;&emsp;启动后，双击 .ipynb 或 .md 后缀的文件即可查看笔记。如果要关闭笔记，不能只是关闭网页，记得要点击 Files - close and halt ，不然笔记的内核会一直运行
+
 &emsp;&emsp;如果要退出，可以在命令行连按两下 *Ctrl + c*，或者按Jupyter浏览器页面右上角的 Quit.
 
 
@@ -163,7 +165,7 @@ jupyter notebook password
 | ↑ / *K*  和  ↓ / *J* | 上下选择要操作的块 |
 | *Enter* |  进入编辑模式 |
 | *Esc* | 退出编辑模式 |
-| *Ctrl + Enter* | 运行代码块 |
+| *Ctrl + Enter* | 运行代码块/显示编辑效果 |
 | *Shift + Enter* | 运行代码块，并且光标跳到下一代码块。如果已经是最后一个代码块，则会新建一个代码块 |
 | *Alt + Enter* | 运行代码块，并在下方新建一个代码块 |
 | *A* | 在上方新建代码块 |
@@ -219,4 +221,8 @@ sudo pip install jupyter_contrib_nbextensions && jupyter contrib nbextension ins
 &emsp;&emsp;现在有了一个新的 JupyterLab，可以去玩一下。
 
 
+
+其他：
+
+[Jupyter notebook 查看Markdown .md文件](https://blog.csdn.net/tuzixini/article/details/83117542)
 

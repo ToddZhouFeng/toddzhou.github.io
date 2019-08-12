@@ -157,12 +157,12 @@ smplayer #媒体播放器，VLC太容易卡死了
 &emsp;&emsp;在前面加`sudo pip3 install`来安装下面的库。
 
 ~~~shell
-numpy #数学计算 #如果出错，用sudo apt-get install python-numpy安装
+numpy #数学计算 #如果出错，装上libatlas-base-dev
 matplotlib #可视化
 nltk #自然语言处理
 jieba #中文语言处理
 scipy #科学计算
-pandas #数据分析#需要 cython 库#如果出错，用sudo apt-get install python pandas安装
+pandas #数据分析#需要 cython 库#如果出错，用sudo apt-get install python-pandas安装
 statsmodels #统计模型
 scikit-learn #机器学习
 scrapy #爬虫

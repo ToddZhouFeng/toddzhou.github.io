@@ -34,5 +34,7 @@ Axis 2.0的入门
 
 # 比较好的博客
 
-[Liam Huang https://liam.page](https://liam.page)
+[Liam Huang https://liam.page](https://liam.page) 一个LaTeX大佬
+
+[https://wangchujiang.com/linux-command/](https://wangchujiang.com/linux-command/)  Linux命令搜索工具
 
