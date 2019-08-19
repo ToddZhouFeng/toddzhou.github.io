@@ -4,6 +4,7 @@ title:  树莓派用作HID设备
 date:   2019-03-17 15:33:00 +0800
 categories: document 
 tag: Raspberry Pi/Arduino
+music-id: 28365297
 ---
 
 > 初步了解一下 HID，等我以后有钱了自制一个机械键盘。

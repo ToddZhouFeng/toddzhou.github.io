@@ -7,7 +7,7 @@ categories: document
 #小类配置
 tag: C++
 #网易云音乐，只能播放无版权保护的
-music-id: 36198480
+music-id: 461544312
 ---
 
 > 本想着应付考试，然而考试并没有考。

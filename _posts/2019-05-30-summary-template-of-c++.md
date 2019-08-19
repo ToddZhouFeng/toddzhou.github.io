@@ -7,7 +7,7 @@ categories: document
 #小类配置
 tag: C++
 #网易云音乐，只能播放无版权保护的
-music-id: 433018842
+music-id: 1316562201
 ---
 
 > 模板真的是绕晕我了……

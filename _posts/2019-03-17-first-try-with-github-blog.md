@@ -4,7 +4,7 @@ title:  初次尝试用Github搭建博客
 date:   2019-03-17 14:00:00 +0800
 categories: diary
 tag: 教程
-music-id: 465675773
+music-id: 481853665
 ---
 
 > 记录我第一次搭建博客的过程
