@@ -34,9 +34,12 @@
         <main id="main" class="main">
             <div class="main-inner">
                 <div class="content-wrap">
-                    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=465675773&auto=1&height=66">
-                    </iframe>
                     <div id="content" class="content">
+                        <div id="music163player">
+                            <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=86 src="//music.163.com/outchain/player?type=2&id=38358214&auto=0&height=66">
+                            </iframe>
+                        </div>
+                        
                         {{ content }}
                     </div>
                     {% include _third-party/duoshuo-hot-articles.html %}
