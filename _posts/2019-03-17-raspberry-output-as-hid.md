@@ -6,9 +6,9 @@ categories: document
 tag: Raspberry Pi/Arduino
 ---
 
+> 初步了解一下 HID，等我以后有钱了自制一个机械键盘。
 
-
-
+<!-- more -->
 
 # 什么是HID
 

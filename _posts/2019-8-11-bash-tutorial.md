@@ -14,11 +14,11 @@ music-id: 465675773
 
 
 
-# Bash入门
-
-Bash是linux自带的命令终端，这个文章会大致过一次Bash的常用命令。
 
 
+>  Bash是linux自带的命令终端，这个文章会大致过一次Bash的常用命令。
+
+<!-- more -->
 
 # ls
 

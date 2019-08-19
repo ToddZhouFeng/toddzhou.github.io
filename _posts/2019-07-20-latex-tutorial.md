@@ -13,7 +13,12 @@ music-id: 465675773
 
 
 
-> 本文参考了[https://liam.page](https://liam.page/)的博文和油管上的LaTex Tutoial，如有侵权，请联系我。
+> 大致介绍一下 LaTeX怎么用。
+
+<!-- more -->
+
+
+
 
 # LaTeX简介
 
@@ -836,3 +841,7 @@ $$
 一份其实很短的LaTeX入门文档：[https://liam.page/2014/09/08/latex-introduction/](https://liam.page/2014/09/08/latex-introduction/)
 
 LaTeX排版系统简介：[http://www.dralpha.com/zh/tech/Inotes2.pdf](http://www.dralpha.com/zh/tech/Inotes2.pdf)
+
+[https://liam.page](https://liam.page/)的博文
+
+油管上的LaTex Tutoial

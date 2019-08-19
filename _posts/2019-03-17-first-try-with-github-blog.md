@@ -7,7 +7,9 @@ tag: 教程
 music-id: 465675773
 ---
 
+> 记录我第一次搭建博客的过程
 
+<!-- more -->
 
 # 为什么要搭博客？
 
@@ -36,6 +38,8 @@ music-id: 465675773
 
 
 # 记录我使用的博客主题
+
+## 第一个主题
 
 ​	我用的是[LessOrMore](https://github.com/luoyan35714/LessOrMore.git)主题，是由国人编写的，对中文支持很好，版式很简洁。大部分修改要修改的文件在根目录和\_includes文件夹里。我把原作者的一些链接改成了我社交媒体的链接（其实就只有Github和B站）。根目录的\_config.yml修改格式如下：
 
@@ -98,9 +102,19 @@ music-id: 465675773
 
 
 
+## 目前正在用的主题
+
+&emsp;&emsp;目前正在用 NexT.Mist，关于设置什么的，可以去 [NexT官网](http://theme-next.iissnan.com/) 。文章的开头可以不用加目录
+
+
+
 # 拓展功能
 
 ## 网易云音乐
+
+见[https://blog.csdn.net/ds19991999/article/details/81293467](https://blog.csdn.net/ds19991999/article/details/81293467)
+
+## 音乐
 
 顺便说一句，原作者是不支持音乐的。但我可以（下面的是《西安人的歌》）：
 
@@ -154,7 +168,9 @@ document.addEventListener('visibilitychange', function () {
 
 
 
-# 文章的分类2019/07/19
+# 文章的分类
+
+## 2019/07/19
 
 文章慢慢增多，分类就很重要了。目前我所深入学习的领域还很少，只有如下几个：
 
@@ -174,9 +190,9 @@ document.addEventListener('visibilitychange', function () {
 
 
 
-# 未来安排2019/07/19
+# 未来安排
 
-换一个好看点的页面：[http://jekyllthemes.org/themes/jekyll-theme-next/](http://jekyllthemes.org/themes/jekyll-theme-next/) 。不得不说NexT真的是好看。
+## 2019/07/19
 
-这里[https://blog.csdn.net/GarfieldEr007/article/details/82875394](https://blog.csdn.net/GarfieldEr007/article/details/82875394)
+（已换）换一个好看点的主题：[http://jekyllthemes.org/themes/jekyll-theme-next/](http://jekyllthemes.org/themes/jekyll-theme-next/) ，不得不说NexT真的是好看。这里[https://blog.csdn.net/GarfieldEr007/article/details/82875394](https://blog.csdn.net/GarfieldEr007/article/details/82875394) 也有很多好看的主题
 
