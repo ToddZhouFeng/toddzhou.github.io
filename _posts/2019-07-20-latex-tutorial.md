@@ -11,8 +11,8 @@ tag: LaTeX
 music-id: 465675773
 ---
 
-* content
-{:toc}
+
+
 > 本文参考了[https://liam.page](https://liam.page/)的博文和油管上的LaTex Tutoial，如有侵权，请联系我。
 
 # LaTeX简介

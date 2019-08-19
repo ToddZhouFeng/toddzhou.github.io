@@ -8,8 +8,8 @@ tag: Raspberry Pi/Arduino
 
 
 
-* content
-{:toc}
+
+
 # 什么是HID
 
 ​	HID（Human Interface Device）是指人机交互设备，如鼠标、键盘、游戏手柄。说是人机交互，但你可以没有人机接口，只要符合[HID设备协议](https://www.usb.org/sites/default/files/documents/hut1_12v2.pdf)就行。

@@ -10,8 +10,8 @@ tag: C++
 music-id: 433018842
 ---
 
-* content
-{:toc}
+
+
 # 函数模板
 
 

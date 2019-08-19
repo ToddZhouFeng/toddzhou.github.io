@@ -7,7 +7,7 @@ date:   2019-08-07 17:55:29 +0800
 #大类配置
 categories: document
 #小类配置
-tag: 旅游, Trip
+tag: [旅游, Trip]
 #网易云音乐，只能播放无版权保护的
 music-id: 465675773
 ---
@@ -16,7 +16,9 @@ music-id: 465675773
 
 
 
-# 成都旅游攻略
+> 8月7~11日去成都玩，玩之前做了点调查，玩之后补充了点评价，遂成这篇攻略。
+
+<!-- more -->
 
 ![](https://cn.bing.com/th?id=OIP.Xqw3B2UOU0F9icYe17_5zAHaFP&pid=Api&rs=1 "成都的标志：太阳神鸟")
 

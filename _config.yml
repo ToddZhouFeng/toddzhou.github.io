@@ -5,7 +5,7 @@
 
 # Site
 title: Todd的个人博客
-subtitle: 
+subtitle: Shut Up and Just Try
 description: 为学日益，为道日损。
 author: Todd Zhou
 # Support language: de, en, fr-FR, id, ja, ko, pt-BR, pt, ru, zh-Hans, zh-hk, zh-tw
@@ -380,7 +380,7 @@ baidu_analytics: 7bb573ea1c18f438143e611c5933843e
 
 # Disqus
 disqus:
-  enable: false
+  enable: true
   shortname:
   count: true
   # hide comments (visitors need to click to load the comments)
@@ -531,7 +531,7 @@ leancloud_visitors:
 # Get more information on http://ibruce.info/2015/04/04/busuanzi/
 busuanzi_count:
   # count values only if the other configs are false
-  enable: false
+  enable: true
   # custom uv span for the whole site
   site_uv: true
   site_uv_header: <i class="fa fa-user"></i>

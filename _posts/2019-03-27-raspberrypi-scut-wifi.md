@@ -7,8 +7,8 @@ tag: Raspberry Pi/Arduino
 music-id: 465675773
 ---
 
-* content
-{:toc}
+
+
 
 
 

@@ -10,8 +10,8 @@ tag: C++
 music-id: 36198480
 ---
 
-* content
-{:toc}
+
+
 # 基本的I/O类库与对象
 
 * `iostream`
