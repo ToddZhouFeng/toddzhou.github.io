@@ -7,13 +7,13 @@ date:   2019-08-07 17:55:29 +0800
 #大类配置
 categories: document
 #小类配置
-tag: 教程
+tag: 旅游, Trip
 #网易云音乐，只能播放无版权保护的
 music-id: 465675773
 ---
 
-* content
-{:toc}
+
+
 
 
 # 成都旅游攻略
