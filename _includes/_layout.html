@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 {% include _blocks/title.html %}
 {% include _blocks/page_class.html %}
 {% include _blocks/sidebar.html %}
@@ -18,69 +18,95 @@
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="{{ page.lang | default: page.language | default: site.language }}">
 
-  {% assign container_class = "container " %}
-  {% if site.sidebar.position %}
+    {% assign container_class = "container " %}
+    {% if site.sidebar.position %}
     {% assign container_class = container_class | append: 'sidebar-position-' | append: site.sidebar.position %}
-  {% endif %}
+    {% endif %}
 
-  <div class="{{ container_class }} {{ page_class }} ">
-    <div class="headband"></div>
+    <div class="{{ container_class }} {{ page_class }} ">
+        <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"> {% include _partials/header.html %} </div>
-    </header>
+        <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+            <div class="header-inner"> {% include _partials/header.html %} </div>
+        </header>
 
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            {{ content }}
-          </div>
-          {% include _third-party/duoshuo-hot-articles.html %}
-          {% include _partials/comments.html %}
+        <main id="main" class="main">
+            <div class="main-inner">
+                <div class="content-wrap">
+                    <div id="content" class="content">
+                        {{ content }}
+                    </div>
+                    {% include _third-party/duoshuo-hot-articles.html %}
+                    {% include _partials/comments.html %}
+                </div>
+                {% if site.sidebar.display != 'remove' %}
+                {{ sidebar }}
+                {% endif %}
+            </div>
+        </main>
+
+        <footer id="footer" class="footer">
+            <div class="footer-inner">
+                {% include _partials/footer.html %}
+                {% include _third-party/analytics/busuanzi-counter.html %}
+                {{ footer }}
+            </div>
+        </footer>
+
+        {% unless site.sidebar.b2t %}
+        <div class="back-to-top">
+            <i class="fa fa-arrow-up"></i>
+            {% if site.sidebar.scrollpercent %}
+            <span id="scrollpercent"><span>0</span>%</span>
+            {% endif %}
         </div>
-        {% if site.sidebar.display != 'remove' %}
-          {{ sidebar }}
-        {% endif %}
-      </div>
-    </main>
+        {% endunless %}
 
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        {% include _partials/footer.html %}
-        {% include _third-party/analytics/busuanzi-counter.html %}
-        {{ footer }}
-      </div>
-    </footer>
+    </div>
 
-    {% unless site.sidebar.b2t %}
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        {% if site.sidebar.scrollpercent %}
-          <span id="scrollpercent"><span>0</span>%</span>
-        {% endif %}
-      </div>
-    {% endunless %}
+    {% include _scripts/vendors.html %}
+    {% include _scripts/commons.html %}
 
-  </div>
+    {% assign scheme_script = '_scripts/schemes/' | append: site.scheme | downcase | append: '.html' %}
+    {% include {{ scheme_script }} %}
 
-  {% include _scripts/vendors.html %}
-  {% include _scripts/commons.html %}
+    {{ script_extra }}
 
-  {% assign scheme_script = '_scripts/schemes/' | append: site.scheme | downcase | append: '.html' %}
-  {% include {{ scheme_script }} %}
+    {% include _scripts/boostrap.html %}
 
-  {{ script_extra }}
+    {% include _third-party/comments/index.html %}
+    {% include _third-party/search/index.html %}
+    {% include _third-party/analytics/lean-analytics.html %}
+    {% include _third-party/seo/baidu-push.html %}
+    {% include _third-party/rating.html %}
+    {% include _third-party/mathjax.html %}
+    {% include _third-party/scroll-cookie.html %}
+    {% include _third-party/exturl.html %}
 
-  {% include _scripts/boostrap.html %}
-
-  {% include _third-party/comments/index.html %}
-  {% include _third-party/search/index.html %}
-  {% include _third-party/analytics/lean-analytics.html %}
-  {% include _third-party/seo/baidu-push.html %}
-  {% include _third-party/rating.html %}
-  {% include _third-party/mathjax.html %}
-  {% include _third-party/scroll-cookie.html %}
-  {% include _third-party/exturl.html %}
+    <script src="/js/jquery.min.js"></script>
+    {% include open-embed.html %}
 </body>
 </html>
+
+<script type="text/javascript">
+    var crashSwitched = false;
+    var originalTitle = document.title;
+    var titleTime;
+    document.addEventListener('visibilitychange', function () {
+    if (document.hidden) {
+    if (Math.random() < parseFloat(0.25)) {
+    crashSwitched = true;
+    document.title = '╭(°A°`)╮ 页面崩溃啦~' + originalTitle;
+    clearTimeout(titleTime);
+    }
+    } else {
+    if (crashSwitched == true) {
+    crashSwitched = false;
+    document.title = '(ฅ>ω<*ฅ) 咦，又好了~' + originalTitle;
+    titleTime = setTimeout(function () {
+    document.title = originalTitle;
+    }, 2000);
+    }
+    }
+    });
+</script>
