@@ -7,7 +7,7 @@ date:   2019-07-22 23:59:00 +0800
 #大类配置
 categories: document
 #小类配置
-tag: Jupyter Notebook
+tag: [Python, Tutorial]
 #网易云音乐，只能播放无版权保护的
 music-id: 465675773
 ---

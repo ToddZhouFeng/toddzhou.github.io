@@ -3,7 +3,7 @@ layout: post
 title:  树莓派初始配置及软件安装
 date:   2019-03-30 09:29:00 +0800
 categories: document
-tag: Raspberry Pi/Arduino
+tag: Raspberry Pi
 music-id: 465675773
 ---
 

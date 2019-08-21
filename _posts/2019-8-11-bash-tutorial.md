@@ -7,7 +7,7 @@ date:   2019-08-11 15:49:00 +0800
 #大类配置
 categories: document
 #小类配置
-tag: 教程
+tag: [Linux, Tutorial]
 #网易云音乐，只能播放无版权保护的
 music-id: 454053318
 ---
@@ -16,7 +16,7 @@ music-id: 454053318
 
 
 
->  Bash是linux自带的命令终端，这个文章会大致过一次Bash的常用命令。
+>  Bash是linux自带的Shell，这个文章会大致过一次Bash的常用命令，满足日常 Linux 的使用。
 
 <!-- more -->
 

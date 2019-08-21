@@ -7,7 +7,7 @@ date:   2019-07-24 22:35:13 +0800
 #大类配置
 categories: document
 #小类配置
-tag: 教程
+tag: [Tutorial]
 #网易云音乐，只能播放无版权保护的
 music-id:  465675773
 ---

@@ -7,7 +7,7 @@ date:   2019-07-20 16:15:17 +0800
 #大类配置
 categories: document
 #小类配置
-tag: LaTeX
+tag: [LaTeX, Tutorial]
 music-id: 433018842
 ---
 
