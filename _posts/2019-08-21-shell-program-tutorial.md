@@ -1,7 +1,7 @@
 ---
 #layout: post
 #标题配置
-title:  Shell编程入门
+title:  Bash编程入门
 #时间配置
 date:   2019-08-21 09:00:00 +0800
 #大类配置
@@ -12,7 +12,9 @@ tag: [Linux, Tutorial]
 music-id: 454053318
 ---
 
+> 学一下 Bash 的基础语法，方便以后写一些批处理
 
+<!--more-->
 
 # 变量
 
