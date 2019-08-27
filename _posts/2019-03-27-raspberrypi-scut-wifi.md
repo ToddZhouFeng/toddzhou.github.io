@@ -95,6 +95,16 @@ sudo route add default gw <网关> eth0
 sudo ifconfig eth0 up
 ~~~
 
+&emsp;&emsp;上面是针对Raspbian Buster的，如果你的是Raspbian Stretch，用下面这些：
+
+```bash
+sudo ifconfig eth0 down
+sudo ifconfig eth0 <IP地址> netmask <掩码>
+sudo ifconfig eth0 hw ether <MAC地址>
+sudo route add default gw <网关>
+sudo ifconfig eth0 up
+```
+
 &emsp;&emsp;如果没有出错（没有任何反应就是没出错），插上网线，输入以下命令：
 
 ```bash
