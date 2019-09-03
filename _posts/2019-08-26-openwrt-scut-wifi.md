@@ -6,27 +6,51 @@ tag: [Linux, Diary, Tutorial]
 music-id: 28391158
 ---
 
+> 网上有一份长达十几页的教程，但那个教程太老了，而且试用范围太窄，故写个试用范围广一点的。
+
 
 
 > 自己动手，丰衣足食。
 
 <!-- more -->
 
-> 之前已经有用树莓派搭过路由器了，为了追求更快的网速，这次决定用OpenWrt系统的路由器来试试。
+> 之前已经有用树莓派搭过路由器了，为了追求更快的网速，这次决定用 OpenWrt 系统的路由器来试试。
 
 
 
 # 准备
 
-* 一台装有 openwrt 的路由器
+* 一台装有 OpenWrt 的路由器（任何 OpenWrt 版本都行，我买的是 NetGear 的）
 * 校园网账号
 * 网线
-* 一台装有 Linux 的 x86_64 设备（电脑/虚拟机/服务器，我在教程中用的是服务器）
+* 一台装有 Linux 的 x86_64 设备（电脑/虚拟机/服务器，我在教程中用的是9元的阿里云服务器，如果你都没有，可以通过E-mail：todd310378072@outlook.com 联系一下我）
 * ssh软件（如果没有，文末有推荐软件）
 
 
 
-# 交叉编译
+# 一点预备知识
+
+## SSH
+
+ssh 是一种协议，我们可以通过ssh软件登录到路由器，然后通过输入命令来操作路由器。
+
+## WAN
+
+WAN，Wide Area Network的缩写，即代表广域网。通过这个连接到学校的网络。
+
+## LAN
+
+LAN，Local Area Network的缩写，即局域网。手机等通过这个连接到路由器。
+
+## 交叉编译
+
+交叉编译是在一个平台上生成另一个平台上的可执行代码（软件）。
+
+
+
+
+
+# 交叉编译and部署
 
 由于 OpenWrt 路由器并没有 cmake 和 make，所以需要先在 Linux服务器上编译好后，再部署到路由器上。
 
@@ -40,21 +64,23 @@ cat /etc/openwrt_release
 
 ```bash
 DISTRIB_ID='OpenWrt'
-DISTRIB_RELEASE='18.06.1'
-DISTRIB_TARGET='ar71xx/nand' #重要的是这一行！必须是ar71xx
+DISTRIB_RELEASE='18.06.1' #重要！
+DISTRIB_TARGET='ar71xx/nand' #重要！
 DISTRIB_ARCH='mips_24kc'
 DISTRIB_TAINTS='no-all'
 DISTRIB_REVISION='R8.1.11 By Lean'
-DISTRIB_DESCRIPTION='OpenWrt '
+DISTRIB_DESCRIPTION='OpenWrt'
 ```
 
-如果不是`ar71xx`，那你需要自行找相应的 target 来编译；如果是，ssh 切换到 Linux服务器，输入：
+
+
+如果版本不是 `18.06.1`，或者不是`ar71xx`，那你需要自行找相应的 target 来编译；如果是，ssh 切换到 Linux服务器，输入：
 
 ```bash
 wget https://downloads.openwrt.org/snapshots/targets/ar71xx/generic/openwrt-sdk-ar71xx-generic_gcc-7.4.0_musl.Linux-x86_64.tar.xz
 ```
 
-> 注：由于 openwrt每年都会更新，所以上面那个文件不存在的话，去 https://downloads.openwrt.org/snapshots/targets/ar71xx/generic/ 找最新的来替换。
+> 注：由于 openwrt每年都会更新，所以上面那个文件不存在的话，去 [https://downloads.openwrt.org/](https://downloads.openwrt.org) 找最新的来替换。
 
 下载好后，解压并进入相应目录：
 
@@ -78,15 +104,17 @@ make defconfig
 make package/scutclient/compile V=s
 ```
 
-如果出现错误，可能缺少什么软件（比如我是缺少一个 gawk ），或者上面的 sdk 有错（我前几次都编译失败，换了那个sdk才成功）
+如果出现错误，可能缺少什么软件（比如我是缺少一个 gawk 和 ccache），或者上面的 sdk 有错（我前几次都编译失败，换了那个 sdk 才成功），这个请自行分析错误信息来解决。
 
-编译好后，将编译好的 ipk文件（在 bin 文件夹里）放到openwrt路由器里，然后通过 `opkg install [文件]` 来安装。
+编译好后，将编译好的 ipk 文件（在 bin 文件夹里）放到openwrt路由器里，然后通过 `opkg install [文件]` 来安装。
 
 
 
-# 连接网络
+# 登录校园网
 
-将路由器插上网线，然后连接校园网：
+首先需要设置好 wan ，设为静态ip，然后将“校园网-个人信息”里的那些 ip、mac、网关填上去。 
+
+将路由器插上网线，然后在 ssh 中输入下面命令连接校园网：
 
 ```bash
 scutclient --username <username> --password <password>
@@ -120,8 +148,8 @@ nohup scutclient --username <username> --password <password> -i <wan>
 
 淘宝店帮忙刷的openwrt 大概率会安装 Shadowsocks，比如我的就安装了 ShadowsockR Plus +。如果你的没安装，自己上网找教程。我说一下大概的配置：
 
-* 添加服务器（就填好ip、端口、密码就行），启用“TCP快速打开”和“自动切换”
-* 客户端，主服务器就选添加的服务器，运行模式选绕过大陆ip，其余可以不变
+* 添加ss服务器（就填好ip、端口、密码就行），启用“TCP快速打开”和“自动切换”
+* 客户端，主服务器就选添加的服务器，运行模式选 GFW，其余可以不变
 * 保存并启动
 
 
