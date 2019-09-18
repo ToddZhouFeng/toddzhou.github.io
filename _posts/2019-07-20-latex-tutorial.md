@@ -832,6 +832,25 @@ $$
 
 
 
+## circuitikz 画电路图
+
+&emsp;&emsp;`\usepackage{circuitikz}` 用法见[官方wiki](https://github.com/circuitikz/circuitikz/wiki) [circuitikz0.8.3版教程](http://www.texdoc.net/texmf-dist/doc/latex/circuitikz/circuitikzmanual.pdf)
+
+```latex
+\begin{figure}[h!]
+	\begin{center}
+		\begin{circuitikz}[european]
+			\draw (0,0)
+			to[V>=$U_s$] (0,2) % 电压源
+			to[R=$R_s$] (3,2)
+			to[R=$R_L$] (3,0)--(0,0); % 电阻
+	\end{circuitikz}
+	\end{center}
+\end{figure}
+```
+
+
+
 ---
 
 # 参考
