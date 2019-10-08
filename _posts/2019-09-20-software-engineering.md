@@ -71,5 +71,3 @@ music-id: 28258623
     * 编码和单元测试
     * 综合测试
 * 软件维护
-
-<iframe id="layer_new_view_iframe" scrolling="auto" allowtransparency="true" frameborder="0" src="https://max.book118.com/index.php?g=Home&amp;m=NewView&amp;a=index&amp;aid=7013133142001153&amp;v=20190917"></iframe>
