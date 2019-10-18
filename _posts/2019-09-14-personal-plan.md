@@ -5,7 +5,7 @@ date:   2019-09-14 15:03:00 +0800
 categories: document 
 tag: [Raspberry Pi, Arduino]
 music-id: 28365297
-password: Au2s2019
+password: Todd
 ---
 
 >  总结一下最近个人的一些吐槽
@@ -34,7 +34,8 @@ password: Au2s2019
 
 # 计划
 
-* 先赶紧把 计算机操作系统 大概看一次，免得又听不懂上课的内容
+* [#] 先赶紧把 计算机操作系统 大概看一次，免得又听不懂上课的内容
+
 * Linux 命令行要快点学会
 * 要开始研究 stm32 的东西
 * 要继续背英语单词
