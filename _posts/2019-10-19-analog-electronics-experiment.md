@@ -85,3 +85,34 @@ $$
 R_o = R_C
 $$
 
+# 调试
+
+要调试得快，就必须对各个量之间得影响了如指掌，比如：
+$$
+A_v \uparrow \rightarrow R_{E1} \downarrow R_C \uparrow \\
+R_i \uparrow \rightarrow R_{E1} \uparrow R_{B1} \uparrow R_{B2} \uparrow \\
+U_{CEQ} \uparrow \rightarrow R_C \uparrow R_E \downarrow V_{BB} \uparrow
+$$
+下面总结遇到各种情况应该调哪个：
+
+* 放大倍数不够：
+
+  减小 $R_{E1}$ ，副作用是输入电阻减小
+
+  增大 $R_C$，副作用是 $U_{BEW}$ 减小
+
+* $U_{CEQ}$ 过小（过大则反过来）
+
+  减小 $R_{E1}$ 
+
+  增大 $R_C$
+
+* $f_L$ 过高：
+
+  增大耦合电容和旁路电容
+
+* $f_H$ 过低：
+
+  在负载端增加 $C_o$
+
+  
