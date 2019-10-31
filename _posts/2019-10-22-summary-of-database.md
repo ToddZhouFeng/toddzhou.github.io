@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  数据库总结
-date:   2019-10-22 21:232:00 +0800
+date:   2019-10-22 21:23:00 +0800
 categories: document
 tag: [SQL]
 music-id: 481853665
@@ -127,6 +127,7 @@ while A!=B:
 7. 伪增高率：若 $X \rightarrow Y, Z \subseteq W$，则 $XW \rightarrow YZ$
 
  
+<<<<<<< HEAD
 
 ## 最小函数依赖集
 
@@ -217,3 +218,5 @@ while 表不可再修改:
 #分解结束
 ```
 
+=======
+>>>>>>> db822d2b04c41fcabd1aac8538b6052548fb51d7
