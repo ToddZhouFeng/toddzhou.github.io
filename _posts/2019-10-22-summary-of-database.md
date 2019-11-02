@@ -97,7 +97,7 @@ while …… #循环……
 【方法】下面解释求属性集 $X$ 的闭包 $X+$ 的过程（有点类似于 FBS）：
 
 ```python
-# X = [x1, x2, x3 ……]
+#X = [x1, x2, x3 ……]
 #最开始时设置一个A和B
 A = []
 B = X
@@ -126,8 +126,8 @@ while A!=B:
 6. 分解率：若 $X \rightarrow Y, Z \subseteq Y$，则 $X \rightarrow Z$ 
 7. 伪增高率：若 $X \rightarrow Y, Z \subseteq W$，则 $XW \rightarrow YZ$
 
- 
-<<<<<<< HEAD
+
+
 
 ## 最小函数依赖集
 
@@ -218,5 +218,4 @@ while 表不可再修改:
 #分解结束
 ```
 
-=======
->>>>>>> db822d2b04c41fcabd1aac8538b6052548fb51d7
+
