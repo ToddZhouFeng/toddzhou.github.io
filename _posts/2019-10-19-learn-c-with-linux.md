@@ -31,11 +31,11 @@ music-id: 481853665
 * [ ] gdb
 * [ ] 排序与查找
 * [ ] 栈和队列
-* [ ] 
+* [ ] 进程
 
 
 
-# 第一章 C 语言入门
+# 第 1 章 C 语言入门
 
 编程语言（Programming Language）分为低级语言（Low-level Language）和高级语言（High-level Language）。机器语言（Machine Language）和汇编语言（Assembly Language）属于低级语言，直接用计算机指令编写程序。而C、C++、Java、Python等属于高级语言，用语句（Statement）编写程序，语句是计算机指令的抽象表示。
 
@@ -84,7 +84,7 @@ gcc -Wall main.c -o main
 
 
 
-# 第二章 常量、变量和表达式
+# 第 2 章 常量、变量和表达式
 
 常量（Constant）是程序中最基本的元素，有字符（Character）常量、整数（Integer）常量、浮点数（Floating Point）常量和枚举常量。
 
@@ -105,7 +105,7 @@ gcc -Wall main.c -o main
 
 
 
-# 第三章 函数
+# 第 3 章 函数
 
 ## 数学函数
 
@@ -179,7 +179,7 @@ int main(void){
 
 
 
-# 第四章 分支语句
+# 第 4 章 分支语句
 
 `if`、`if/else`  语句咱就不多说了。在此只说一下 `switch` 的几个要点：
 
@@ -188,7 +188,7 @@ int main(void){
 
 
 
-# 第五章 循环语句
+# 第 5 章 循环语句
 
 * `while`：
 
@@ -233,60 +233,113 @@ int main(void){
 
   
 
-  # 第六章 结构体
+# 第 6 章 结构体
 
   在编程语言中，最基本的、不可再分的数据类型称为基本类型（Primitive Type），例如整型、浮点型；根据语法规则由基本类型组合而成的类型称为复合类型（Compound Type），例如字符串是由很多字符组成的。有些场合下要把复合类型当作一个整体来用，而另外一些场合下需要分解组成这个复合类型的各种基本类型，复合类型的这种两面性为数据抽象（Data Abstraction）奠定了基础。[[SICP\]](https://akaedu.github.io/book/bi01.html#bibli.sicp)指出，在学习一门编程语言时要特别注意以下三个方面：
 
   1. 这门语言提供了哪些Primitive，比如基本类型，比如基本运算符、表达式和语句。
   2. 这门语言提供了哪些组合规则，比如基本类型如何组成复合类型，比如简单的表达式和语句如何组成复杂的表达式和语句。
   3. 这门语言提供了哪些抽象机制，包括数据抽象和过程抽象（Procedure Abstraction）。
+
+
+## 结构体的基本
+
+结构体定义：
+
+```c
+struct complex_struct {
+	double x, y;
+};
+```
+
+结构体用于定义变量：
+
+```c
+struct complex_struct {
+	double x, y;
+} z1, z2;
+//或
+struct complex_struct z3, z4;
+//甚至
+struct {
+	double x, y;
+} z1, z2;//以后都不能再次定义变量
+```
+
+结构体变量在定义时初始化：
+
+```c
+struct complex_struct z = { 3.0, 4.0 };
+```
+
+Initializer中的数据依次赋给结构体的各成员。如果Initializer中的数据比结构体的成员多，编译器会报错，但如果只是末尾多个逗号则不算错。如果Initializer中的数据比结构体的成员少，未指定的成员将用0来初始化，就像未初始化的全局变量一样。 
+
+访问结构体：
+```c
+z1.x=1;
+x1.y=2;
+```
+
   
-  
-  
-  ## 结构体的基本
-  
-  结构体定义：
-  
-  ```c
-  struct complex_struct {
-  	double x, y;
-  };
-  ```
-  
-  结构体用于定义变量：
-  
-  ```c
-  struct complex_struct {
-  	double x, y;
-  } z1, z2;
-  //或
-  struct complex_struct z3, z4;
-  //甚至
-  struct {
-  	double x, y;
-  } z1, z2;//以后都不能再次定义变量
-  ```
-  
-  结构体变量在定义时初始化：
-  
-  ```c
-  struct complex_struct z = { 3.0, 4.0 };
-  ```
-  
-  Initializer中的数据依次赋给结构体的各成员。如果Initializer中的数据比结构体的成员多，编译器会报错，但如果只是末尾多个逗号则不算错。如果Initializer中的数据比结构体的成员少，未指定的成员将用0来初始化，就像未初始化的全局变量一样。 
-  
-  访问结构体：
-  
-  ```c
-  z1.x=1;
-  x1.y=2;
-  ```
-  
-  
-  
-  
-  
-  
+
+#  **第 30 章 进程** 
+
+## 创建新进程 fork函数
+
+```c
+#include <sys/types.h>
+#include <unistd.h>
+
+pid_t fork(void);
+```
+
+ `fork()` 调用失败则返回-1，调用成功则：
+
+1. 在子进程中返回0，子进程仍可以调用`getpid`函数得到自己的进程id，也可以调用`getppid`函数得到父进程的 id。
+2. 在父进程中返回子进程的 id，父进程用 `getpid` 可以得到自己的进程id，然而要想得到子进程的id，只有将 `fork` 的返回值记录下来，别无它法。 
+
+
+
+## 运行程序 exec函数
+
+   用`fork`创建子进程后执行的是和父进程相同的程序（但有可能执行不同的代码分支），子进程往往要调用一种`exec`函数以执行另一个程序。当进程调用一种`exec`函数时，该进程的用户空间代码和数据完全被新程序替换，从新程序的启动例程开始执行。调用`exec`并不创建新进程，所以调用`exec`前后该进程的id并未改变。 
+
+ 有六种以`exec`开头的函数，统称`exec`函数： 
+
+```c
+#include <unistd.h>
+
+int execl(const char *path, const char *arg, ...);
+int execlp(const char *file, const char *arg, ...);
+int execle(const char *path, const char *arg, ..., char *const envp[]);
+int execv(const char *path, char *const argv[]);
+int execvp(const char *file, char *const argv[]);
+int execve(const char *path, char *const argv[], char *const envp[]);
+```
+
+ 这些函数如果调用成功则加载新的程序从启动代码开始执行，不再返回，如果调用出错则返回 -1，所以 `exec` 函数只有出错的返回值而没有成功的返回值。 
+
+下面解释各个函数的区别：
+
+1.  不带字母 p（表示path）的`exec`函数第一个参数必须是程序的相对路径或绝对路径，例如 `"/bin/ls"` 或 `"./a.out"`，  而不能是 `"ls"` 或 `"a.out"`。
+2.  对于带字母 p 的函数： 
+   1. 如果参数中包含/，则将其视为路径名。
+   2. 否则视为不带路径的程序名，在 `PATH` 环境变量的目录列表中搜索这个程序。
+3.  带有字母 l（表示list）的`exec`函数要求将新程序的每个命令行参数都当作一个参数传给它 ，命令行参数的个数是可变的，最后一个可变参数应该是 `NULL`，起 sentinel 的作用。
+4.   带有字母 v（表示vector）的函数，则应该先构造一个指向各参数的指针数组，然后将该数组的首地址当作参数传给它，数组中的最后一个指针也应该是 `NULL`，就像 `main` 函数的 `argv` 参数或者环境变量表一样。 
+5.  对于以e（表示environment）结尾的 `exec` 函数，可以把一份新的环境变量表传给它，其他 `exec` 函数仍使用当前的环境变量表执行新程序。 
+
+
+
+ 事实上，只有`execve`是真正的系统调用，其它五个函数最终都调用`execve` ， 这些函数之间的关系如下图所示。：
+
+![](https://akaedu.github.io/book/images/process.exec.png)
+
+ 
+
+## 清除子进程 wait和waitpid函数
+
+ 一个进程在终止时会关闭所有文件描述符，释放在用户空间分配的内存，但它的 PCB 还保留着，内核在其中保存了一些信息：如果是正常终止则保存着退出状态，如果是异常终止则保存着导致该进程终止的信号是哪个。这个进程的父进程可以调用 `wait` 或 `waitpid` 获取这些信息，然后彻底清除掉这个进程。 比如： 一个进程的退出状态可以在Shell中用特殊变量 `$?` 查看，因为Shell是它的父进程，当它终止时Shell调用 `wait` 或 `waitpid` 得到它的退出状态同时彻底清除掉这个进程。 
 
 
 
