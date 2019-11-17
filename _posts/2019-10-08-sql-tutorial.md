@@ -263,7 +263,7 @@ SELECT 列 FROM 表 WHERE NOT IN/BETWEEN/EXISTS
 
 > 注：
 >
-> 1. `AVG( )` 只能用于单列，要勇于多列，要用多个 `AVG( )`
+> 1. `AVG( )` 只能用于单列，要用于多列，要用多个 `AVG( )`
 > 2. `COUNT(*)` 会包括空行，但 `COUNT(column)` 则不包括空行
 > 3. `MAX( )` 会返回数字或日期的最大值，对于文本，返回最后一行。
 
