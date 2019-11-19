@@ -277,3 +277,97 @@ SELECT AVG(列) AS 别名 FROM 表 #给结果提供一个别名，方便使用
 SELECT COUNT(*) AS 别名 FROM 表
 ```
 
+
+
+# 插入数据
+
+## 插入行
+
+插入可以使用 `INSERT` 语句，它要求指定表明和插入的行的值：
+
+```mysql
+INSERT INTO sustomers
+VALUES(NULL, 'Todd', 'CN');
+```
+
+`INSERT` 语句不会产生输出，如果列没有值，则要使用 NULL 值，上面的值的顺序取决于表中定义的列的顺序，因此这种 `INSERT` 语句很不安全，推荐使用更安全的方法：
+
+```mysql
+INSERT INTO customers(cust_address, cust_name, cust_conutry)
+VALUES(NULL, 'Todd', 'CN')
+```
+
+这样 VALUES 中的值的顺序对应前面的列名顺序。
+
+但无论上面哪种语法，都必须给出 VALUES 的正确数目，对于某些列，如果满足以下一个条件，则可以省略：
+
+1. 该列允许为空值
+2. 在表定义中给出默认值
+
+如果要插入多个行，只需将每组值用圆括号括起来，用逗号分隔，统一放在 VALUES 后面：
+
+```mysql
+INSERT INTO customers(cust_address, cust_name, cust_conutry)
+VALUES(NULL, 'Todd', 'CN'), (NULL, 'Andy', 'USA');
+```
+
+
+
+## 复制行
+
+我们可以用 SELECT 代替 VALUES，将其他表的行复制到选中的表：
+
+```mysql
+INSERT INTO customers(cust_address, cust_name, cust_conutry)
+SELECT cust_address, cust_name, cust_conutry FROM custnew;
+```
+
+
+
+# 使用游标
+
+前面说过，`SELECT` 操作返回的是结果的集合，如果要选中其中一行，则需要用游标（相当于鼠标点击），游标可以在数据中滚动，这个主要用于于交互式应用。
+
+使用游标的步骤：
+
+1. 声明游标
+2. 打开游标
+3. 读取游标
+4. 关闭游标
+
+
+
+## 声明游标
+
+语句如下：
+
+```mysql
+DECLARE [游标名] CURSOR
+FOR
+SELECT ...;
+```
+
+
+
+## 打开/关闭游标
+
+```mysql
+OPEN [游标名];
+```
+
+```mysql
+CLOSE [游标名];
+```
+
+
+
+## 使用游标
+
+游标打开后，位于 -1 行，即位于第一条数据的前面。我们用 `FETCH` 语句读取下一行：
+
+```mysql
+FETCH [游标名] FROM [表] INTO [变量];
+```
+
+
+
