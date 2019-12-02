@@ -76,7 +76,7 @@ gcc main.c
 gcc main.c -o main
 ```
 
-当然，我建议显示所有警告信息，用下面这条命令：
+当然，建议显示所有警告信息，用下面这条命令：
 
 ```bash
 gcc -Wall main.c -o main
