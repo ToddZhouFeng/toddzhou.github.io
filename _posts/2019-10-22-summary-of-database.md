@@ -294,7 +294,7 @@ while …… #循环……
 
 【定义】**关系数据库**：Relational Database is a collection of normalized relations.
 
-【定义】**笛卡尔积**：一组域的乘积，即 $D_1 \times D_2 \times \cdots D_n = \{ (d_1, d_2, \cdots, d_n) | d_i \in D_i, i = 1, 2, \cdots, n \}$
+【定义】**笛卡尔积**：一组域的乘积，即 $D_1 \times D_2 \times \cdots D_n = \{ (d_1, d_2, \cdots, d_n) &#124 d_i \in D_i, i = 1, 2, \cdots, n \}$
 
 
 
@@ -417,9 +417,9 @@ ER图转换为关系模式的原则：
 
 
 
-1. 并：$R \cup S \equiv \{ t | t \in R \vee t \in S\}$
-2. 差：$R - S \equiv \{ t | t \in R \wedge t \notin S \}$
-3. 乘积：$R \times S \equiv \{ t | t=<t^r, t^s> \wedge t^r \in R \wedge t^s \in S \}$
+1. 并：$R \cup S \equiv \{ t &#124 t \in R \vee t \in S\}$
+2. 差：$R - S \equiv \{ t \| t \in R \wedge t \notin S \}$
+3. 乘积：$R \times S \equiv \{ t \| t=<t^r, t^s> \wedge t^r \in R \wedge t^s \in S \}$
 4. 选择：$\sigma_F(R) \equiv \{ t | t \in R \wedge F(t) = \rm{ture} \}$
 5. 投影：$\pi_{i_1, i_2, \cdots, i_m}(R) \equiv \{ t | t = <t_{i1}, t_{i2}, \cdots, t_{im}> \wedge t^r \in R\}$
 6. 交：$R \cap S \equiv \{ t | t \in R \wedge t \in S \} = R - (R-S)$
