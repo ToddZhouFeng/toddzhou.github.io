@@ -294,7 +294,7 @@ while …… #循环……
 
 【定义】**关系数据库**：Relational Database is a collection of normalized relations.
 
-【定义】**笛卡尔积**：一组域的乘积，即 $D_1 \times D_2 \times \cdots D_n = \{ (d_1, d_2, \cdots, d_n) \| d_i \in D_i, i = 1, 2, \cdots, n \}$
+【定义】**笛卡尔积**：一组域的乘积，即 $D_1 \times D_2 \times \cdots D_n = \\{ (d_1, d_2, \cdots, d_n) \| d_i \in D_i, i = 1, 2, \cdots, n \\}$
 
 
 
@@ -419,13 +419,13 @@ ER图转换为关系模式的原则：
 
 1. 并：$R \cup S \equiv \\{ t \| t \in R \vee t \in S\\}$
 2. 差：$R - S \equiv \\{ t \| t \in R \wedge t \notin S \\}$
-3. 乘积：$R \times S \equiv \{ t \| t=<t^r, t^s> \wedge t^r \in R \wedge t^s \in S \}$
+3. 乘积：$R \times S \equiv \\{ t \| t=<t^r, t^s> \wedge t^r \in R \wedge t^s \in S \\}$
 4. 选择：$\sigma_F(R) \equiv \{ t \| t \in R \wedge F(t) = \rm{ture} \}$
-5. 投影：$\pi_{i_1, i_2, \cdots, i_m}(R) \equiv \{ t \| t = <t_{i1}, t_{i2}, \cdots, t_{im}> \wedge t^r \in R\}$
-6. 交：$R \cap S \equiv \{ t \| t \in R \wedge t \in S \} = R - (R-S)$
-7. 连接：$R \bowtie_{ i \theta j} S \equiv \{ t \| t=<t^r, t^s> \wedge t^r \in R \wedge t^s \in S \wedge t_i^r \theta t_j^s\}$
+5. 投影：$\pi_{i_1, i_2, \cdots, i_m}(R) \equiv \\{ t \| t = <t_{i1}, t_{i2}, \cdots, t_{im}> \wedge t^r \in R\\}$
+6. 交：$R \cap S \equiv \\{ t \| t \in R \wedge t \in S \\} = R - (R-S)$
+7. 连接：$R \bowtie_{ i \theta j} S \equiv \\{ t \| t=<t^r, t^s> \wedge t^r \in R \wedge t^s \in S \wedge t_i^r \theta t_j^s\\}$
 8. 自然连接（natural join）：$R \bowtie S$  在R×S中，选择R和S公共属性值均相等的元组，并去掉 R×S中重复的公共属性列。 如果两个关系没有公共属性， 则自然连接就转化为笛卡尔积。
-9. 除法：：把S看作一个块，如果R中相同属性 集中的元组有相同的块， 且除去此块后留下的相应元组均相同，那么可以得到一条元组， 所有这些元组的集合就是除法的结果。
+9. 除法：：把S看作一个块，如果R中相同属性集中的元组有相同的块， 且除去此块后留下的相应元组均相同，那么可以得到一条元组， 所有这些元组的集合就是除法的结果。
 10. 外连接：$$R ] \bowtie_{ i \theta j} [ S$$ 如果R和S自然连接时，把R和S原来要舍弃的元组都放到新关系中，若对方关系没有相应的元组，新元组中其他的属性应填上空值NULL。 
 
 
@@ -434,7 +434,48 @@ ER图转换为关系模式的原则：
 
 
 
+### 关系代数表达式的应用
+
+设教学数据库中有3个关系模式： 
+
+- 学生关系S(SNO,SNAME,AGE,SEX) 
+- 学习关系SC(SNO,CNO,GRADE)
+- 课程关系C(CNO,CNAME,TEACHER)
+
+
+
+1. 检索特定列和特定行：
+
+    1. 检索课程号为 C2 的学生的学号和成绩：$\pi_\rm{Sno, GRADE} ( \sigma_\rm{CNO = "C2"}(\rm{SC}))$
+2. 跨表检索特定列和特定行：
+    1. 检索学习课程号为C2的学生学号与姓名：先查找后自然连接 $\pi_\rm{SNO, SNAME}(\rm{S}) \bowtie \pi_\rm{SNO} (\sigma_\rm{CNO = "C2"} (\rm{SC}))$ ；先自然连接后查找 略
+    2. 检索选修课程名为MATHS的学生学号与姓名：先自然连接后查找 $\pi_\rm{SNO, SNAME} (\sigma_\rm{CNAME = "MATHS"}(S \bowtie SC \bowtie C))$
+    3. 检索所学课程包含S3所学课程的学生学号：$\pi_\rm{SNO, CNO}(SC) \div \pi_\rm{CNO}(\sigma_\rm{SNO="S3"}(SC))$
+3. 至少/至多：
+    1. 检索至少选修课程号为C2和C4的学生学号： $\pi_\rm{SNO}(\sigma_\rm{1=4 \wedge 2="C2" \wedge 5="C4"}(SC \times SC))$
+4. 不：
+    1. 检索不学C2课的学生姓名与年龄：$\pi_\rm{SNAME, AGE}(S) - \pi_\rm{SNAME, AGE}(\sigma_\rm{CNO = "C2"}(S \bowtie SC))$
+
+
+
+查询优化策略：
+
+1. 尽可能 早 地执行 选择 及 投影 操作
+2. 把 乘积 和随后的 选择 合并成 联接 操作
+3. 一连串的选择和一连串的投影应 同时 运算
+4. 若在表达式中多次出现某个子表达式，应预先将该子表达式算出结果并 保存 起来，避免重复计算。
+5. 在 联接前 适当地对关系文件进行预处理 。如对文件进行排序和建立索引 。
+
+
+
 ## 元组关系演算
+
+【定义】**关系演算**：把数理逻辑的谓词演算推广到关系运算中。分为：
+
+1. 元组演算——以元组为变量
+2. 域演算——以域为变量
+
+
 
 
 
