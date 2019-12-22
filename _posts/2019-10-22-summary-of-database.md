@@ -417,16 +417,16 @@ ER图转换为关系模式的原则：
 
 
 
-1. 并：$R \cup S \equiv \{ t \| t \in R \vee t \in S\}$
-2. 差：$R - S \equiv \{ t \| t \in R \wedge t \notin S \}$
+1. 并：$R \cup S \equiv \\{ t \| t \in R \vee t \in S\\}$
+2. 差：$R - S \equiv \\{ t \| t \in R \wedge t \notin S \\}$
 3. 乘积：$R \times S \equiv \{ t \| t=<t^r, t^s> \wedge t^r \in R \wedge t^s \in S \}$
 4. 选择：$\sigma_F(R) \equiv \{ t \| t \in R \wedge F(t) = \rm{ture} \}$
 5. 投影：$\pi_{i_1, i_2, \cdots, i_m}(R) \equiv \{ t \| t = <t_{i1}, t_{i2}, \cdots, t_{im}> \wedge t^r \in R\}$
 6. 交：$R \cap S \equiv \{ t \| t \in R \wedge t \in S \} = R - (R-S)$
 7. 连接：$R \bowtie_{ i \theta j} S \equiv \{ t \| t=<t^r, t^s> \wedge t^r \in R \wedge t^s \in S \wedge t_i^r \theta t_j^s\}$
 8. 自然连接（natural join）：$R \bowtie S$  在R×S中，选择R和S公共属性值均相等的元组，并去掉 R×S中重复的公共属性列。 如果两个关系没有公共属性， 则自然连接就转化为笛卡尔积。
-9. 除法：：把S看作一个块，如果R中相同属性 集中的元组有相同的块， 且除去此块后留下的相应元组均相 同，那么可以得到一条元组， 所有这些元组的集合就是除法 的结果。
-10. 外连接：如果R和S自然连接时，把R和S原来要舍弃的元组都放到新 关系中，若对方关系没有相应的元组，新元组中其他的属性 应填上空值NULL。 
+9. 除法：：把S看作一个块，如果R中相同属性 集中的元组有相同的块， 且除去此块后留下的相应元组均相同，那么可以得到一条元组， 所有这些元组的集合就是除法的结果。
+10. 外连接：$$R ] \bowtie_{ i \theta j} [ S$$ 如果R和S自然连接时，把R和S原来要舍弃的元组都放到新关系中，若对方关系没有相应的元组，新元组中其他的属性应填上空值NULL。 
 
 
 
