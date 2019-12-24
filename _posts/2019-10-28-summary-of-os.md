@@ -526,7 +526,7 @@ void consumer(void)
 
 ## 分区技术
 
-比较好的总结：[操作系统——分区存储管理](https://www.cnblogs.com/wkfvawl/p/11687619.html)
+比较好的总结：[操作系统——分区存储管理](https://www.cnblogs.com/wkfvawl/p/11687619.html) （同时也推荐这个人的其他总结）
 
 总的来说，分区技术就是指将内存划分为
 
