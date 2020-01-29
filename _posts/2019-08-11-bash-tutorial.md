@@ -167,7 +167,7 @@ Linux 的目录结构与 windows 不同，它并不区分CDE盘，只用文件�
 
 # less
 
-和more差不多
+和more差不多，但比more强大一点，因为 Less is More
 
 
 

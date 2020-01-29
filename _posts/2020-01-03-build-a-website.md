@@ -42,13 +42,13 @@ music-id: 1309394857
 
 
 
-# 软件准备
+# 软件准备 2020/01/04
 
 在网上查了点资料，感觉目前已经有 Wordpress 了，就没必要从零开始造轮子了，不妨在 wordpress 的基础上逐渐添加自己的代码。服务端打算采用 LNMP，虽说 LAMP 更加强大一点，但 LNMP 对服务器配置的要求没那么高，而且我的水平还用不上 LAMP。下面是安装过程：（参考了 [https://www.digitalocean.com/community/tutorials/how-to-install-wordpress-with-lemp-on-ubuntu-18-04](https://www.digitalocean.com/community/tutorials/how-to-install-wordpress-with-lemp-on-ubuntu-18-04)）
 
 
 
-## Linux
+## 配置Linux
 
 首先新建一个非 root 用户（用 root 太不安全了），并且设置 sudo 权限：
 
@@ -69,7 +69,7 @@ ufw status #确保ssh没被阻塞
 
 
 
-## Nginx
+## 下载Nginx
 
 Nginx是一个高性能的HTTP代理服务器，可以直接通过 apt 安装：
 
@@ -88,7 +88,7 @@ sudo ufw allow 'Nginx HTTP'
 
 
 
-## Mysql
+## 下载Mysql
 
 Mysql 是一个数据库系统，也可以直接通过 apt 安装：
 
@@ -138,7 +138,7 @@ EXIT;
 
 
 
-## PHP
+## 下载PHP
 
 PHP 是后端处理动态请求的软件，我们需要安装 php、php-fpm、php-mysql等：
 
@@ -155,7 +155,7 @@ sudo systemctl restart php7.2-fpm
 
 
 
-## 配置 Nginx
+## 配置Nginx
 
 打开nginx的默认配置文件，修改使其支持php：
 
@@ -323,7 +323,7 @@ define('FS_METHOD', 'direct'); //在最后添加这一行
 
 
 
-## wordpress的nginx配置文件
+## wordpress 的 nginx 配置文件
 
 创建wordpress的nginx配置文件：
 
@@ -372,4 +372,30 @@ sudo rm /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default #删
 sudo ln -s /etc/nginx/sites-available/wordpress /etc/nginx/sites-enabled/
 sudo systemctl reload nginx
 ```
+
+
+
+# 搭建开发环境 2020/01/05
+
+咱用的是 Windows，所以还得在装一次，不过这次我们采用 LAMP（因为有一键安装包 XAMPP 可用）
+
+首先[下载XAMPP](https://www.apachefriends.org/zh_cn/download.html)，选择 PHP 和 Linux 上相同的版本，然后安装，建议安装到 D 盘，避免出现读写权限相关的错误。（如果出现端口错误，自行改端口，或在任务管理器中禁用占用端口的服务）
+
+然后[下载wordpress](https://bitnami.com/stack/xampp?utm_source=bitnami&utm_medium=installer&utm_campaign=XAMPP%2BInstaller)，同样安装与 Linux 上相同的版本。
+
+（注：我的版本：xampp-windows-x64-7.2.26-0-VC15-installer.exe 和bitnami-wordpress-5.3.2-0-module-windows-x64-installer.exe）
+
+顺便记录一下，我装完后，Apache 显示有个 example.com 出错了，已停止。但我看 wordpress 还是能访问，所以估计是什么 bug 吧……
+
+
+
+# wordpress插件
+
+以下是一些必要的插件：
+
+* all-in-one-wp-security-and-firewall 防火墙
+* useso-take-over-google 替换掉谷歌字体，加速国内访问
+* wp-editormd markdown编辑器
+
+
 

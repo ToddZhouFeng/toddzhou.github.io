@@ -94,7 +94,7 @@ deb-src http://mirrors.ustc.deu.cn/raspbian/raspbian/ buster main contrib non-fr
 ~~~bash
 #/etc/apt/sources.list.d/raspi.list
 #中科大
-deb http://mirrors.ustc.edu.cn/raspbian/raspbian/ buster main ui
+deb http://mirrors.ustc.edu.cn/raspbian/raspbian/ buster main
 ~~~
 
 &emsp;&emsp;实际上，就只是把 Stretch源 中的 `stretch` 换成了 `buster`
@@ -281,7 +281,7 @@ sudo pip3 install numpy
 
 &emsp;&emsp;扩大micro SD卡空间：进入`raspi-config`，选择`Advanced Options`，选择`Expand Filesystem`，重启。
 
-&emsp;&emsp;安装所需要的库（一次一行，别一次全装）：
+&emsp;&emsp;安装所需要的库（一次一行，别一次全装，安装出错看log）：
 
 ~~~shell
 sudo apt-get install build-essential git cmake pkg-config -y
@@ -311,7 +311,8 @@ wget https://github.com/Itseez/opencv_contrib/archive/3.4.0.zip
 &emsp;&emsp;解压这两个文件
 
 ~~~shell
-sudo unzip 3.4.0.zip 3.4.0.zip.1
+unzip 3.4.0.zip 
+unzip 3.4.0.zip.1
 ~~~
 
 &emsp;&emsp;创建build文件夹，并进入
@@ -331,7 +332,7 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D INSTALL_
 &emsp;&emsp;**千万要注意，上面的路径不要写错！**最好去看看有没有对应的文件或文件夹，也就是下面几个
 
 ~~~shell
-OPENCV_EXTRA_MODULES_PATH=/home/pi/Downloads/opencv_contrib-3.4.0/modules #解压出来的东西
+OPENCV_EXTRA_MODULES_PATH=/home/pi/opencv_contrib-3.4.0/modules #解压出来的东西
 PYTHON_INCLUDE_DIR=/usr/include/python3.5 
 PYTHON_LIBRARY=/usr/lib/arm-linux-gnueabihf/libpython3.5m.so 
 PYTHON3_NUMPY_INCLUDE_DIRS=/usr/lib/python3/dist-packages/numpy/core/include #numpy的安装路径
