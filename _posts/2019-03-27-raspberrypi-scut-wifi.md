@@ -14,11 +14,11 @@ music-id: 28391158
 
 
 
-> &emsp;&emsp;首先我要特别感谢[象牙塔塔主](<https://www.jianshu.com/u/e21ceff836ec>)，他的文章是我在网上查到的唯一资料，为了向他致敬，我决定沿用他的主标题（希望这不要被认为是蹭热度......），并且我这篇教程只允许他转载。希望各位同学去他的[简书](https://www.jianshu.com/u/e21ceff836ec)关注并点赞。
+> &emsp;&emsp;首先我要特别感谢 [象牙塔塔主](<https://www.jianshu.com/u/e21ceff836ec>)，ta 的文章是我在网上查到的唯一资料，为了向 ta 致敬，我决定沿用 ta 的主标题（希望这不要被认为是蹭热度......），并且我这篇教程只允许他转载。希望各位同学去 ta 的 [简书](https://www.jianshu.com/u/e21ceff836ec) 关注并点赞。
 >
 > &emsp;&emsp;同时感谢 [scutclient](https://github.com/scutclient)，他们才是真正的大神。
 >
-> &emsp;&emsp;有任何问题，请联系我：Todd310378072@outlook.com，~~如果是小姐姐，直接加我的微信好了~~
+> &emsp;&emsp;有任何问题，请联系我：201830260422@mail.scut.edu.cn，~~如果是小姐姐，直接加我的微信好了~~
 
 
 
@@ -26,17 +26,19 @@ music-id: 28391158
 
 &emsp;&emsp;网上已经有相关教程了：[SCUT树莓派宿舍搭建无线网](<https://www.jianshu.com/p/4b8e98475aeb>)，那个教程写得很好，但我在实践的过程中遇到了问题：
 
-* Ubuntu 对树莓派3B+的支持不是很好，官网上提供的系统根本用不了。
+* Ubuntu 对树莓派 3B+ 的支持不是很好，官网上提供的系统根本用不了。
 * Ubuntu 太过于臃肿，树莓派孱弱的性能不是很够，而且 Ubuntu 耗电貌似大一点。
 
-&emsp;&emsp;于是我结合那个教程，把其中 Ubuntu 的设置 Debian
+&emsp;&emsp;于是我结合那个教程，把其中 Ubuntu 换成 Debian
+
+&emsp;&emsp;另外，如果你想用路由器，可以看我这个教程 [openwrt搭建宿舍无线网](https://toddzhoufeng.github.io/2019/08/26/openwrt-scut-wifi/)
 
 
 
 # 准备    {#Prepare}
 
 * 校园网账号（有线网可用，如果是黑市买的账号，要向卖家拿相关设置）
-* 安装好 Debian 的树莓派（以及屏幕、键盘、鼠标、电源，不要用ssh）
+* 安装好 Debian 的树莓派（以及屏幕、键盘、鼠标、电源，不要用 ssh）
 * 网线
 * 网络（我们需要下载一些东西）
 
@@ -206,7 +208,7 @@ sudo create_ap wlan0 eth0 <热点名> <密码>
 sudo setsid create_ap wlan0 eth0 <热点名> <密码>
 ```
 
-&emsp;&emsp;上面这条命令是将输出重定向到 nohup 文件中，并且即使关闭了当前 shell 也不会终止该进程。用 `setsid` 命令也行。
+&emsp;&emsp;用 `setsid` 命令的话，即使关闭了当前 shell 也不会终止该进程。当然也可以用 `nohup`，将输出重定向到 nohup.out 文件中。这个看个人取舍。如果你想方便调试，那就用 nohup，如果想简洁，那就用 setsid。
 
 &emsp;&emsp;这样虽然开机有 WiFi，但由于没登陆 SCUT，所以还是没网，还要输入 `sudo nohup sudo /home/pi/scutclient/build/scutclient --username <SCUT账号> --password <SCUT密码>`。不过你可以不用连接屏幕和键盘，直接用 SSH 就行了。
 
@@ -244,7 +246,7 @@ sudo create_ap --mac-filter wlan0 eth0 热点名 密码
 
 &emsp;&emsp;重新启动热点即可生效。
 
-&emsp;&emsp;后期需要添加设备的话，可以先用手机或电脑开热点，把设备连接到热点，然后在手机或电脑上看Mac地址，再添加到`/etc/hostapd/hostapd.accept`（超级麻烦，所以如果是别的宿舍来借网，我都是直接用回原来的命令开热点）
+&emsp;&emsp;后期需要添加设备的话，可以先用手机或电脑开热点，把设备连接到热点，然后在手机或电脑上看Mac地址，再添加到 `/etc/hostapd/hostapd.accept`（超级麻烦，所以如果是别的宿舍来借网，我都是直接用回原来的命令开热点）
 
 
 
@@ -254,7 +256,7 @@ sudo create_ap --mac-filter wlan0 eth0 热点名 密码
 
 &emsp;&emsp;WiFi 信号在信道上传播，如果某个信道有多个 WiFi，则信号间可能会有影响。我们可以将热点换到WiFi较少的信道即可。如何查看信道呢？去应用商店搜 “ wifi 分析” ，我用的是 WiFi Analyzer（安卓）这个软件。
 
-&emsp;&emsp;修改信道的方法很简单，在启动命令中加`-c 信道`，即：
+&emsp;&emsp;修改信道的方法很简单，在启动命令中加 `-c 信道`，即：
 
 ~~~shell
 sudo create_ap -c 信道 wlan0 eth0 热点名 密码
@@ -272,11 +274,11 @@ sudo create_ap -c 信道 --mac-filter wlan0 eth0 热点名 密码
 
 # 结语
 
-&emsp;&emsp;虽然看起来很多要做，但对于熟悉命令行的同学来说，这点命令也不算多。我按照这个实践过后已经成功了，如果你有任何问题，请联系我！我的邮箱为310378072@qq.com。
+&emsp;&emsp;虽然看起来很多要做，但对于熟悉命令行的同学来说，这点命令也不算多。我按照这个实践过后已经成功了，如果你有任何问题，请联系我！我的邮箱为 201830260422@mail.scut.edu.cn。
 
-&emsp;&emsp;P.s. 树莓派配置完后，如果断开热点，再通过WiFi连接网络，可能会连接不了。我初步猜测可能是掩码的问题，但懒得研究怎么弄...于是采取了个简单粗暴的方法`sudo ifconfig eth0 down`，然后就连上了。
+&emsp;&emsp;P.s. 树莓派配置完后，如果断开热点，再通过 WiFi 连接网络，可能会连接不了。我初步猜测可能是掩码的问题，但懒得研究怎么弄...于是采取了个简单粗暴的方法 `sudo ifconfig eth0 down`，然后就连上了。
 
-&emsp;&emsp;P.P.s. 3B和3B+我都试了弄热点，虽然没仔细测过，个人感觉在供电充足的情况下，3B+会比3B快一点。但由于3B+需要2.5A电流（普通的充电器达不到），所以3B反而好一丢丢。
+&emsp;&emsp;P.P.s. 3B 和 3B+ 我都试了弄热点，虽然没仔细测过，个人感觉在供电充足的情况下，3B+ 会比 3B 快一点。但由于 3B+ 需要 2.5A 电流（普通的充电器达不到），所以 3B 反而好一丢丢。
 
 
 
