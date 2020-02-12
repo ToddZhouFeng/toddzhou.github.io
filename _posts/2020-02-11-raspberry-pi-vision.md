@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  初探计算机视觉
-date:   2020-02-11 20:1052:00 +0800
+date:   2020-02-11 20:52:00 +0800
 categories: document
 tag: [OpenCV, Python]
 music-id: 1309394857
