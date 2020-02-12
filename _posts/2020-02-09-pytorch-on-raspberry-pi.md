@@ -91,9 +91,11 @@ export MAX_JOBS=2 #编译时最大CPU核心数
 python3 setup.py build
 ```
 
-我的树莓派3B+ 编译了30多个小时 😭，我看的所有教程都说只需要 7~8个小时。
+我的树莓派3B+ 编译了40多个小时 😭，我看的所有教程都说只需要 7~8个小时。
 
 编译时可能会出现 `subprocess.CalledProcessError: Command '['cmake', '--build', '.', '--target', 'install', '--config', 'Release', '--', '-j', '4']' returned non-zero exit status 2. `，这时要检查一下前面的东西。如果反复出现，考虑一下用 Python3.6 而不是 3.7（buster 默认是 3.7）
+
+
 
 # 安装
 
@@ -103,24 +105,23 @@ sudo -E python3 setup.py install
 
 
 
-# 测试
+## 测试
 
 ```python
-from __future__ import print_function
 import torch
-a = torch.eye(3,3)
-print (a)
 ```
 
-显示结果：
 
-```python
-tensor([
-    [1,1,1],
-    [1,1,1],
-    [1,1,1]
-])
-```
+
+## __C.so 不存在
+
+去到 torch 安装的文件夹（我的是 `/usr/local/lib/python3.7/dist-packages/torch`），将 \_\_C 开头那个文件重命名为 \_\_C.so，同时将  \_\_dl 开头那个文件重命名为 \_\_dl.so
+
+
+
+## __C 未定义
+
+去 torch 的github文件夹，里面有个 `test` 文件，在里面运行 python，再试试 `import torch`
 
 
 
