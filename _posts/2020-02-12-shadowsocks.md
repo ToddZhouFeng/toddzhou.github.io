@@ -30,6 +30,6 @@ password: A91k2jfd
 1. [https://free-ss.site/](https://free-ss.site/)
 2. 老王vpn（Google Play商店有）
 
-我的梯子（每月一换）：[复制url到ss](ss://YWVzLTI1Ni1nY206bXVybXVyMjAyMA@45.76.161.129:45672)
+我的梯子（每月一换，没了去给我提 issue）：[复制url到ss](ss://YWVzLTI1Ni1nY206bXVybXVyMjAyMA@45.76.161.129:45672)
 
 如果不想用我的梯子，可以自建一个：[Shadowsocks一键安装脚本（四合一）](https://github.com/ishen7/Blog/issues/2)
