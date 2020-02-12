@@ -25,11 +25,12 @@ password: A91k2jfd
 
 我的邮箱为 ToddZZF@outlook.com
 
-推荐的免费梯子：
-
-1. [https://free-ss.site/](https://free-ss.site/)
-2. 老王vpn（Google Play商店有）
-
-我的梯子（每月一换，没了去给我提 issue）：[复制url到ss](ss://YWVzLTI1Ni1nY206bXVybXVyMjAyMA@45.76.161.129:45672)
+我的梯子（开到上学）：[复制url到ss](ss://YWVzLTI1Ni1nY206bXVybXVyMjAyMA@45.76.161.129:45672)
 
 如果不想用我的梯子，可以自建一个：[Shadowsocks一键安装脚本（四合一）](https://github.com/ishen7/Blog/issues/2)
+
+---
+
+顺便说一下，上学以后，我的梯子只有在周末才开，这样省钱一点。建议平时优先使用免费的梯子：[free-ss.site](https://free-ss.site) ，速度还行，稳定性一般。
+
+又再顺便说一下，以后用我梯子，直接把钱充到我的饭卡里就行了，刚好拿来洗澡~
