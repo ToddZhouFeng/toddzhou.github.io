@@ -17,8 +17,7 @@ music-id: 433018842
 
 <!-- more -->
 
-
-
+[数学符号大集](https://rpi.edu/dept/arc/training/latex/LaTeX_symbols.pdf)
 
 # LaTeX简介
 
@@ -380,6 +379,7 @@ $$
 \ln \; \lg \; \log \; \sin \; \arcsin \; \sinh \; \max
 $$
 
+&emsp;&emsp;还有，建议在开头加上 `\newcommand{\dif}{\mathop{}\!\mathrm{d}}`，这样就可以直接用 `\dif` 表示微分 d
 
 
 ### 括号及间隙
