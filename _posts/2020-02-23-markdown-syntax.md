@@ -20,6 +20,7 @@ article_header:
 
 Markdown 致力于使阅读和创作文档变得容易.
 <!--more-->
+<!-- more -->
 
 # 为什么用 Markdown
 
